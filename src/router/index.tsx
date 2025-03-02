@@ -5,6 +5,7 @@ const HelloThree = lazy(() => import("./../views/HelloThree"));
 const AddAxesHelper = lazy(() => import("./../views/AddAxesHelper"));
 const ObjectDisplacement = lazy(() => import("./../views/ObjectDisplacement"));
 const Geometrys = lazy(() => import("./../views/Geometrys"));
+const DifferentMaterials = lazy(() => import("./../views/DifferentMaterials"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -40,6 +41,12 @@ const routes = [
         key: "/Geometrys",
         path: "/Geometrys",
         element: withLoadingComponent(<Geometrys />),
+      },
+      {
+        label: "DifferentMaterials",
+        key: "/DifferentMaterials",
+        path: "/DifferentMaterials",
+        element: withLoadingComponent(<DifferentMaterials />),
       },
     ],
   },
