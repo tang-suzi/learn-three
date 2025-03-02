@@ -2,6 +2,7 @@ import React, { lazy } from "react";
 import App from "./../App";
 import { Navigate } from "react-router-dom";
 const HelloThree = lazy(() => import("./../views/HelloThree"));
+const AddAxesHelper = lazy(() => import("./../views/AddAxesHelper"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -19,6 +20,12 @@ const routes = [
         key: "/helloThree",
         path: "/helloThree",
         element: withLoadingComponent(<HelloThree />),
+      },
+      {
+        label: "addAxesHelper",
+        key: "/addAxesHelper",
+        path: "/addAxesHelper",
+        element: withLoadingComponent(<AddAxesHelper />),
       },
     ],
   },

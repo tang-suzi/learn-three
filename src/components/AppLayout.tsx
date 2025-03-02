@@ -46,8 +46,7 @@ const LayoutComp: FC = () => {
         </Header>
         <Content
           style={{
-            margin: "24px 16px",
-            padding: 24,
+            margin: "auto 20px",
             minHeight: 280,
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
