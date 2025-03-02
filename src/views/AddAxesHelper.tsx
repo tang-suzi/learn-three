@@ -28,13 +28,24 @@ const AddAxesHelper: FC = () => {
     // 世界坐标辅助器
     const axesHelper = new THREE.AxesHelper(5);
     scene.add(axesHelper);
+    // 轨道控制器
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.update();
+    // 阻尼惯性
+    controls.enableDamping = true;
+    // 阻尼系数
+    controls.dampingFactor = 0.02;
+    // 旋转
+    controls.autoRotate = true;
+    // 旋转速度
+    controls.autoRotateSpeed = 0.5;
+    // 启用或禁用摄像机平移
+    controls.enablePan = true;
+    // 启用或禁用摄像头水平或垂直旋转
+    controls.enableRotate = true;
 
     const animate = () => {
+      controls.update();
       requestAnimationFrame(animate);
-      cube.rotation.x += 0.01;
-      cube.rotation.y += 0.01;
       renderer.render(scene, camera);
     };
     animate();
