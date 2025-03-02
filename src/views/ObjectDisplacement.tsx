@@ -25,11 +25,15 @@ const ObjectDisplacement: FC = () => {
 
     const parentCube = new THREE.Mesh(geometry, parentMaterial);
     parentCube.position.set(-3, 0, 0);
+    // 设置缩放
+    parentCube.scale.set(2, 2, 2);
+    // 设置旋转 x, y, z
+    parentCube.rotation.set(Math.PI / 6, 0, 0);
     scene.add(parentCube);
     const cube = new THREE.Mesh(geometry, material);
     //  修改元素位置
-    // cube.position.x = 2;
     cube.position.set(3, 0, 0);
+    cube.scale.set(2, 2, 2);
     parentCube.add(cube);
     const axesHelper = new THREE.AxesHelper(5);
     scene.add(axesHelper);
