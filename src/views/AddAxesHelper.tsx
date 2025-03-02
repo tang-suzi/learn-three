@@ -1,5 +1,6 @@
 import { FC, useEffect, useRef } from "react";
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 const AddAxesHelper: FC = () => {
   const addAxesHelperRef = useRef<HTMLDivElement>(null);
@@ -27,6 +28,9 @@ const AddAxesHelper: FC = () => {
     // 世界坐标辅助器
     const axesHelper = new THREE.AxesHelper(5);
     scene.add(axesHelper);
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.update();
+
     const animate = () => {
       requestAnimationFrame(animate);
       cube.rotation.x += 0.01;
