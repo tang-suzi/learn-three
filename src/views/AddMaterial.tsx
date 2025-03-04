@@ -38,6 +38,9 @@ const AddMaterial: FC = () => {
     const textureLoader = new THREE.TextureLoader();
     // 加载贴图
     const texture = textureLoader.load(textureImg);
+    // texture.colorSpace = THREE.NoColorSpace; // 默认线性空间
+    // texture.colorSpace = THREE.LinearSRGBColorSpace; // 默认线性空间
+    texture.colorSpace = THREE.SRGBColorSpace; // 纹理颜色空间
     // 加载ao贴图
     const aoMap = textureLoader.load(textureImgAo);
     // 加载透明度贴图
@@ -60,7 +63,10 @@ const AddMaterial: FC = () => {
       reflectivity: 1,
     });
     const rgbeLoader = new RGBELoader();
-    const hdrPath = new URL("./../assets/texture/Alex_Hart-Nature_Lab_Bones_2k.hdr", import.meta.url).href
+    const hdrPath = new URL(
+      "./../assets/texture/Alex_Hart-Nature_Lab_Bones_2k.hdr",
+      import.meta.url
+    ).href;
     rgbeLoader.load(hdrPath, (envMap) => {
       // 设置球形贴图
       envMap.mapping = THREE.EquirectangularReflectionMapping;
@@ -73,6 +79,15 @@ const AddMaterial: FC = () => {
     const plane = new THREE.Mesh(planeGeometry, planeMaterial);
     scene.add(plane);
     gui.add(planeMaterial, "aoMapIntensity").min(0).max(1).name("ao强度");
+    gui
+      .add(texture, "colorSpace", {
+        sRGB: THREE.SRGBColorSpace,
+        Linear: THREE.LinearSRGBColorSpace,
+        NoColorSpace: THREE.NoColorSpace,
+      })
+      .onChange(() => {
+        texture.needsUpdate = true;
+      });
     const animate = () => {
       requestAnimationFrame(animate);
       controls.update();
