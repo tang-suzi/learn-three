@@ -12,6 +12,7 @@ const LoadGltfModel = lazy(() => import("./../views/LoadGltfModel"));
 const RaycastingInteraction = lazy(
   () => import("./../views/RaycastingInteraction")
 );
+const TweenAnimation = lazy(() => import("./../views/TweenAnimation"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -77,6 +78,12 @@ const routes = [
         key: "/RaycastingInteraction",
         path: "/RaycastingInteraction",
         element: withLoadingComponent(<RaycastingInteraction />),
+      },
+      {
+        label: "TweenAnimation",
+        key: "/TweenAnimation",
+        path: "/TweenAnimation",
+        element: withLoadingComponent(<TweenAnimation />),
       },
     ],
   },
