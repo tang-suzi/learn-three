@@ -2,7 +2,7 @@ import { FC, useEffect, useRef } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GUI } from "three/examples/jsm/libs/lil-gui.module.min.js";
-const RaycastingInteraction: FC = () => {
+const MultipleObjectBoundingBoxes: FC = () => {
   const threeDemo = useRef<HTMLDivElement>(null);
   const hasInit = useRef(false);
   const init = () => {
@@ -31,20 +31,40 @@ const RaycastingInteraction: FC = () => {
       new THREE.MeshBasicMaterial({ color: 0xff0000 })
     );
     sphere1.position.set(-4, 0, 0);
+    sphere1.name = "sphere1";
     scene.add(sphere1);
     const sphere2 = new THREE.Mesh(
       new THREE.SphereGeometry(1, 32, 32),
       new THREE.MeshBasicMaterial({ color: 0x00ff00 })
     );
     sphere2.position.set(4, 0, 0);
+    sphere2.name = "sphere2";
     scene.add(sphere2);
     const sphere3 = new THREE.Mesh(
       new THREE.SphereGeometry(1, 32, 32),
       new THREE.MeshBasicMaterial({ color: 0x0000ff })
     );
     sphere3.position.set(0, 0, 0);
+    sphere3.name = "sphere3";
     scene.add(sphere3);
+    const box = new THREE.Box3();
+    const sphereArr = [sphere1, sphere2, sphere3];
+    for (let i = 0; i < sphereArr.length; i++) {
+      //   // 获取当前物体的包围盒
+      //   sphereArr[i].geometry.computeBoundingBox();
+      //   // 获取包围盒
+      //   const box3 = sphereArr[i].geometry.boundingBox;
+      //   sphereArr[i].updateWorldMatrix(true, true);
+      //   // 将包围盒转换到世界坐标系
+      //   box3.applyMatrix4(sphereArr[i].matrixWorld);
 
+      // 计算包围盒
+      const box3 = new THREE.Box3().setFromObject(sphereArr[i]);
+      // 合并包围盒
+      box.union(box3);
+    }
+    const boxHelper = new THREE.Box3Helper(box, 0xffff00);
+    scene.add(boxHelper);
     // 创建射线
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
@@ -97,4 +117,4 @@ const RaycastingInteraction: FC = () => {
   );
 };
 
-export default RaycastingInteraction;
+export default MultipleObjectBoundingBoxes;

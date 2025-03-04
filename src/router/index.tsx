@@ -19,6 +19,9 @@ const VertexTransform = lazy(() => import("./../views/VertexTransform"));
 const BoundingBoxAndWorldMatrix = lazy(
   () => import("./../views/BoundingBoxAndWorldMatrix")
 );
+const MultipleObjectBoundingBoxes = lazy(
+  () => import("./../views/MultipleObjectBoundingBoxes")
+);
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -114,6 +117,12 @@ const routes = [
         key: "/BoundingBoxAndWorldMatrix",
         path: "/BoundingBoxAndWorldMatrix",
         element: withLoadingComponent(<BoundingBoxAndWorldMatrix />),
+      },
+      {
+        label: "多个物体包围盒",
+        key: "/MultipleObjectBoundingBoxes",
+        path: "/MultipleObjectBoundingBoxes",
+        element: withLoadingComponent(<MultipleObjectBoundingBoxes />),
       },
     ],
   },
