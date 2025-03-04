@@ -15,6 +15,7 @@ const RaycastingInteraction = lazy(
 const TweenAnimation = lazy(() => import("./../views/TweenAnimation"));
 const UVPropSetting = lazy(() => import("./../views/UVPropSetting"));
 const NormalVerctor = lazy(() => import("./../views/NormalVerctor"));
+const VertexTransform = lazy(() => import("./../views/VertexTransform"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -98,6 +99,12 @@ const routes = [
         key: "/NormalVerctor",
         path: "/NormalVerctor",
         element: withLoadingComponent(<NormalVerctor />),
+      },
+      {
+        label: "VertexTransform",
+        key: "/VertexTransform",
+        path: "/VertexTransform",
+        element: withLoadingComponent(<VertexTransform />),
       },
     ],
   },
