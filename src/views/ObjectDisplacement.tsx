@@ -15,7 +15,8 @@ const ObjectDisplacement: FC = () => {
     camera.position.y = 5;
     camera.position.z = 5;
     const gui = new GUI();
-    console.log(gui);
+    gui.domElement.style.position = "absolute";
+    threeDemo.current?.appendChild(gui.domElement);
     // gui 实现全屏幕
     gui.add(
       {
