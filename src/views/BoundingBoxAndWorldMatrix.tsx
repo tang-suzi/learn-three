@@ -34,6 +34,7 @@ const BoundingBoxAndWorldMatrix: FC = () => {
       (texture) => {
         texture.mapping = THREE.EquirectangularReflectionMapping;
         scene.environment = texture;
+        scene.background = texture;
       }
     );
     const gltfLoader = new GLTFLoader();
@@ -46,12 +47,31 @@ const BoundingBoxAndWorldMatrix: FC = () => {
         const duckMesh = gltf.scene.getObjectByName("LOD3spShape");
         const duckGeometry = duckMesh?.geometry;
         duckGeometry.computeBoundingBox();
+        // 设置几何体居中
+        // duckGeometry.center();
         // 更新世界矩阵
         duckMesh.updateWorldMatrix(true, true);
         const duckBox = duckGeometry.boundingBox;
         duckBox.applyMatrix4(duckMesh.matrixWorld);
         const boxHelper = new THREE.Box3Helper(duckBox, 0xffff00);
         scene.add(boxHelper);
+        // 获取物体中心点
+        const center = duckBox.getCenter(new THREE.Vector3());
+        // 包围球
+        const duckSphere = duckGeometry.boundingSphere;
+        duckSphere.applyMatrix4(duckMesh.matrixWorld);
+        const sphereGeometry = new THREE.SphereGeometry(
+          duckSphere.radius,
+          16,
+          16
+        );
+        const sphereMaterial = new THREE.MeshBasicMaterial({
+          color: 0xff0000,
+          wireframe: true,
+        });
+        const sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        sphereMesh.position.copy(center);
+        scene.add(sphereMesh);
       }
     );
 
