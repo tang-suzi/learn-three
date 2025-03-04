@@ -21,7 +21,12 @@ const LayoutComp: FC = () => {
   };
   return (
     <Layout style={{ width: "100vw", height: "100vh" }}>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
+      <Sider
+        trigger={null}
+        collapsible
+        collapsed={collapsed}
+        style={{ overflowY: "scroll" }}
+      >
         <div className="demo-logo-vertical" />
         <Menu
           theme="dark"
