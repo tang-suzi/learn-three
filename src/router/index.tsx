@@ -9,6 +9,9 @@ const DifferentMaterials = lazy(() => import("./../views/DifferentMaterials"));
 const AddMaterial = lazy(() => import("./../views/AddMaterial"));
 const FogScene = lazy(() => import("./../views/FogScene"));
 const LoadGltfModel = lazy(() => import("./../views/LoadGltfModel"));
+const RaycastingInteraction = lazy(
+  () => import("./../views/RaycastingInteraction")
+);
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -68,6 +71,12 @@ const routes = [
         key: "/LoadGltfModel",
         path: "/LoadGltfModel",
         element: withLoadingComponent(<LoadGltfModel />),
+      },
+      {
+        label: "RaycastingInteraction",
+        key: "/RaycastingInteraction",
+        path: "/RaycastingInteraction",
+        element: withLoadingComponent(<RaycastingInteraction />),
       },
     ],
   },
