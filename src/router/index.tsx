@@ -31,6 +31,7 @@ const LambertMaterial = lazy(() => import("./../views/LambertMaterial"));
 const PhongMaterial = lazy(() => import("./../views/PhongMaterial"));
 const StandardMaterial = lazy(() => import("./../views/StandardMaterial"));
 const PhysicalMaterial = lazy(() => import("./../views/PhysicalMaterial"));
+const IorAndReflectivity = lazy(() => import("../views/IorAndReflectivity"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -190,6 +191,12 @@ const routes = [
             key: "/PhysicalMaterial",
             path: "/PhysicalMaterial",
             element: withLoadingComponent(<PhysicalMaterial />),
+          },
+          {
+            label: "折射率和反射率",
+            key: "/IorAndReflectivity",
+            path: "/IorAndReflectivity",
+            element: withLoadingComponent(<IorAndReflectivity />),
           },
         ],
       },
