@@ -22,6 +22,7 @@ const BoundingBoxAndWorldMatrix = lazy(
 const MultipleObjectBoundingBoxes = lazy(
   () => import("./../views/MultipleObjectBoundingBoxes")
 );
+const WireframeGeometry = lazy(() => import("./../views/WireframeGeometry"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -123,6 +124,12 @@ const routes = [
         key: "/MultipleObjectBoundingBoxes",
         path: "/MultipleObjectBoundingBoxes",
         element: withLoadingComponent(<MultipleObjectBoundingBoxes />),
+      },
+      {
+        label: "线框几何体",
+        key: "/WireframeGeometry",
+        path: "/WireframeGeometry",
+        element: withLoadingComponent(<WireframeGeometry />),
       },
     ],
   },
