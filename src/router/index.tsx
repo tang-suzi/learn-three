@@ -29,6 +29,7 @@ const CityWireframeGeometry = lazy(
 const MatcapMaterial = lazy(() => import("./../views/MatcapMaterial"));
 const LambertMaterial = lazy(() => import("./../views/LambertMaterial"));
 const PhongMaterial = lazy(() => import("./../views/PhongMaterial"));
+const StandardMaterial = lazy(() => import("./../views/StandardMaterial"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -176,6 +177,12 @@ const routes = [
             key: "/PhongMaterial",
             path: "/PhongMaterial",
             element: withLoadingComponent(<PhongMaterial />),
+          },
+          {
+            label: "标准材质",
+            key: "/StandardMaterial",
+            path: "/StandardMaterial",
+            element: withLoadingComponent(<StandardMaterial />),
           },
         ],
       },
