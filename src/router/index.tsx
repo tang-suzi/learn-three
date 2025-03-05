@@ -32,6 +32,7 @@ const PhongMaterial = lazy(() => import("./../views/PhongMaterial"));
 const StandardMaterial = lazy(() => import("./../views/StandardMaterial"));
 const PhysicalMaterial = lazy(() => import("./../views/PhysicalMaterial"));
 const IorAndReflectivity = lazy(() => import("../views/IorAndReflectivity"));
+const ClearcoatMaterial = lazy(() => import("../views/ClearcoatMaterial"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -197,6 +198,12 @@ const routes = [
             key: "/IorAndReflectivity",
             path: "/IorAndReflectivity",
             element: withLoadingComponent(<IorAndReflectivity />),
+          },
+          {
+            label: "清漆",
+            key: "/ClearcoatMaterial",
+            path: "/ClearcoatMaterial",
+            element: withLoadingComponent(<ClearcoatMaterial />),
           },
         ],
       },
