@@ -43,7 +43,7 @@ const WireframeGeometry: FC = () => {
       new URL("./../assets/model/building.glb", import.meta.url).href,
       // 加载完成回调
       (gltf) => {
-        scene.add(gltf.scene);
+        // scene.add(gltf.scene); // 注释移除原有建筑模型
         const building = gltf.scene.children[0];
         const geometry = building.geometry;
         // 获取边缘
@@ -52,8 +52,13 @@ const WireframeGeometry: FC = () => {
         const edgesMaterial = new THREE.LineBasicMaterial({
           color: 0xffffff,
         });
-        // 创建线段
         const edges = new THREE.LineSegments(edgesGeometry, edgesMaterial);
+        // 更新建筑物的转换矩阵
+        building.updateMatrixWorld(true, true);
+        edges.matrix.copy(building.matrixWorld);
+        // 同步建筑物的属性
+        edges.matrix.decompose(edges.position, edges.quaternion, edges.scale);
+        // 创建线段
         scene.add(edges);
       }
     );
