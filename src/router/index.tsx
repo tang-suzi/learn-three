@@ -1,6 +1,5 @@
 import React, { lazy } from "react";
 import App from "./../App";
-import { Navigate } from "react-router-dom";
 const HelloThree = lazy(() => import("./../views/HelloThree"));
 const AddAxesHelper = lazy(() => import("./../views/AddAxesHelper"));
 const ObjectDisplacement = lazy(() => import("./../views/ObjectDisplacement"));
@@ -33,6 +32,9 @@ const StandardMaterial = lazy(() => import("./../views/StandardMaterial"));
 const PhysicalMaterial = lazy(() => import("./../views/PhysicalMaterial"));
 const IorAndReflectivity = lazy(() => import("../views/IorAndReflectivity"));
 const ClearcoatMaterial = lazy(() => import("../views/ClearcoatMaterial"));
+const ClothAndFabricMaterial = lazy(
+  () => import("../views/ClothAndFabricMaterial")
+);
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -200,10 +202,16 @@ const routes = [
             element: withLoadingComponent(<IorAndReflectivity />),
           },
           {
-            label: "清漆",
+            label: "清漆材质",
             key: "/ClearcoatMaterial",
             path: "/ClearcoatMaterial",
             element: withLoadingComponent(<ClearcoatMaterial />),
+          },
+          {
+            label: "布料和织物材料",
+            key: "/ClothAndFabricMaterial",
+            path: "/ClothAndFabricMaterial",
+            element: withLoadingComponent(<ClothAndFabricMaterial />),
           },
         ],
       },
