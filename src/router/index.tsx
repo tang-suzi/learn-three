@@ -30,6 +30,7 @@ const MatcapMaterial = lazy(() => import("./../views/MatcapMaterial"));
 const LambertMaterial = lazy(() => import("./../views/LambertMaterial"));
 const PhongMaterial = lazy(() => import("./../views/PhongMaterial"));
 const StandardMaterial = lazy(() => import("./../views/StandardMaterial"));
+const PhysicalMaterial = lazy(() => import("./../views/PhysicalMaterial"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -183,6 +184,12 @@ const routes = [
             key: "/StandardMaterial",
             path: "/StandardMaterial",
             element: withLoadingComponent(<StandardMaterial />),
+          },
+          {
+            label: "物理材质",
+            key: "/PhysicalMaterial",
+            path: "/PhysicalMaterial",
+            element: withLoadingComponent(<PhysicalMaterial />),
           },
         ],
       },
