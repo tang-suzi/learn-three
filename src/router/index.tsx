@@ -27,6 +27,7 @@ const CityWireframeGeometry = lazy(
   () => import("./../views/CityWireframeGeometry")
 );
 const MatcapMaterial = lazy(() => import("./../views/MatcapMaterial"));
+const LambertMaterial = lazy(() => import("./../views/LambertMaterial"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -163,6 +164,12 @@ const routes = [
             path: "/MatcapMaterial",
             element: withLoadingComponent(<MatcapMaterial />),
           },
+          {
+            label: "朗伯特材质",
+            key: "/LambertMaterial",
+            path: "/LambertMaterial",
+            element: withLoadingComponent(<LambertMaterial />),
+          },
         ],
       },
       {
@@ -195,7 +202,7 @@ const routes = [
         key: "RaycastingAndObjectInteraction",
         children: [],
       },
-      
+
       {
         label: "应用物理引擎",
         key: "PhysicsEngine",

@@ -63,9 +63,7 @@ const MatcapMaterial: FC = () => {
     }
   }, []);
   return (
-    <div ref={threeDemo} style={{ width: "400px", height: "400px" }}>
-      MatcapMaterial
-    </div>
+    <div ref={threeDemo} style={{ width: "400px", height: "400px" }}></div>
   );
 };
 
