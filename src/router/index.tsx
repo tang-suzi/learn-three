@@ -23,6 +23,9 @@ const MultipleObjectBoundingBoxes = lazy(
   () => import("./../views/MultipleObjectBoundingBoxes")
 );
 const WireframeGeometry = lazy(() => import("./../views/WireframeGeometry"));
+const CityWireframeGeometry = lazy(
+  () => import("./../views/CityWireframeGeometry")
+);
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -130,6 +133,12 @@ const routes = [
         key: "/WireframeGeometry",
         path: "/WireframeGeometry",
         element: withLoadingComponent(<WireframeGeometry />),
+      },
+      {
+        label: "城市线框几何体",
+        key: "/CityWireframeGeometry",
+        path: "/CityWireframeGeometry",
+        element: withLoadingComponent(<CityWireframeGeometry />),
       },
     ],
   },
