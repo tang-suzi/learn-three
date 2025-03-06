@@ -36,6 +36,7 @@ const ClothAndFabricMaterial = lazy(
   () => import("../views/ClothAndFabricMaterial")
 );
 const IridescenceEffect = lazy(() => import("../views/IridescenceEffect"));
+const DestroyMatrix = lazy(() => import("../views/DestroyMatrix"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -219,6 +220,12 @@ const routes = [
             key: "/IridescenceEffect",
             path: "/IridescenceEffect",
             element: withLoadingComponent(<IridescenceEffect />),
+          },
+          {
+            label: "销毁模型",
+            key: "/DestroyMatrix",
+            path: "/DestroyMatrix",
+            element: withLoadingComponent(<DestroyMatrix />),
           },
         ],
       },
