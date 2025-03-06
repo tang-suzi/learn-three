@@ -38,6 +38,7 @@ const ClothAndFabricMaterial = lazy(
 const IridescenceEffect = lazy(() => import("../views/IridescenceEffect"));
 const DestroyMatrix = lazy(() => import("../views/DestroyMatrix"));
 const SettingControls = lazy(() => import("../views/SettingControls"));
+const TextureTransform = lazy(() => import("../views/TextureTransform"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -239,7 +240,14 @@ const routes = [
       {
         label: "纹理材质",
         key: "textureMaterial",
-        children: [],
+        children: [
+          {
+            label: "设置控制器",
+            key: "/TextureTransform",
+            path: "/TextureTransform",
+            element: withLoadingComponent(<TextureTransform />),
+          },
+        ],
       },
       {
         label: "灯光与阴影",
