@@ -1,6 +1,7 @@
 import { FC, useEffect, useRef } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { GUI } from "three/examples/jsm/libs/lil-gui.module.min.js";
 
 const TextureTransform: FC = () => {
   const threeDemo = useRef<HTMLDivElement>(null);
@@ -10,6 +11,7 @@ const TextureTransform: FC = () => {
   let renderer: THREE.WebGLRenderer | null = null;
   let controls: OrbitControls | null = null;
   let textureLoader: THREE.TextureLoader | null = null;
+  let gui: GUI | null = null;
   const init = () => {
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
@@ -53,6 +55,31 @@ const TextureTransform: FC = () => {
     const plane = new THREE.Mesh(planeGeometry, planeMaterial);
     scene.add(plane);
 
+    gui = new GUI();
+    gui.domElement.style.position = "absolute";
+    threeDemo.current?.appendChild(gui.domElement);
+
+    const texture1 = textureLoader.load(
+      new URL("./../assets/texture/rain.png", import.meta.url).href
+    );
+    texture1.flipY = true; // 纵向翻转，默认为翻转true
+    const planeGeometry1 = new THREE.PlaneGeometry(1, 1);
+    const planeMaterial1 = new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      map: texture1,
+      transparent: true,
+    });
+    const plane1 = new THREE.Mesh(planeGeometry1, planeMaterial1);
+    plane1.position.set(2, 0, 0);
+    scene.add(plane1);
+    scene.background = new THREE.Color(0xffffff);
+    gui
+      .add(texture1, "premultiplyAlpha")
+      .name("预乘Alpha")
+      .onChange(() => {
+        texture1.needsUpdate = true;
+      });
+
     const animate = () => {
       requestAnimationFrame(animate);
       controls.update();
@@ -67,7 +94,10 @@ const TextureTransform: FC = () => {
     }
   }, []);
   return (
-    <div ref={threeDemo} style={{ width: "400px", height: "400px" }}></div>
+    <div
+      ref={threeDemo}
+      style={{ width: "400px", height: "400px", position: "relative" }}
+    ></div>
   );
 };
 
