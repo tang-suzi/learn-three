@@ -59,6 +59,7 @@ const TextureTransform: FC = () => {
     gui.domElement.style.position = "absolute";
     threeDemo.current?.appendChild(gui.domElement);
 
+    // 纵向翻转及预乘Alpha
     const texture1 = textureLoader.load(
       new URL("./../assets/texture/rain.png", import.meta.url).href
     );
@@ -78,6 +79,61 @@ const TextureTransform: FC = () => {
       .name("预乘Alpha")
       .onChange(() => {
         texture1.needsUpdate = true;
+      });
+
+    // 放大滤镜
+    const texture2 = textureLoader.load(
+      new URL("./../assets/texture/filter/minecraft.png", import.meta.url).href
+    );
+    const planeGeometry2 = new THREE.PlaneGeometry(1, 1);
+    const planeMaterial2 = new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      map: texture2,
+      transparent: true,
+    });
+    const plane2 = new THREE.Mesh(planeGeometry2, planeMaterial2);
+    plane2.position.set(-2, 0, 0);
+    texture2.magFilter = THREE.NearestFilter;
+    scene.add(plane2);
+    gui
+      .add(texture2, "magFilter", {
+        就近: THREE.NearestFilter, // 就近采样
+        线性: THREE.LinearFilter, // 线性采样
+      })
+      .name("放大滤镜")
+      .onChange(() => {
+        texture2.needsUpdate = true;
+      });
+
+    // 放大滤镜
+    const texture3 = textureLoader.load(
+      new URL(
+        "./../assets/texture/brick/brick_diffuse.jpg",
+        import.meta.url
+      ).href
+    );
+    const planeGeometry3 = new THREE.PlaneGeometry(1, 1);
+    const planeMaterial3 = new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      map: texture3,
+      transparent: true,
+    });
+    const plane3 = new THREE.Mesh(planeGeometry3, planeMaterial3);
+    plane3.position.set(-2, 2, 0);
+    texture3.minFilter = THREE.LinearMipmapLinearFilter;
+    scene.add(plane3);
+    gui
+      .add(texture3, "minFilter", {
+        就近: THREE.NearestFilter,
+        就近最匹配的mipmap: THREE.NearestMipmapNearestFilter,
+        就近最接近的两个mipmap: THREE.NearestMipmapLinearFilter,
+        线性: THREE.LinearFilter,
+        线性最匹配的mipmap: THREE.LinearMipmapNearestFilter,
+        线性最接近的两个mipmap: THREE.LinearMipmapLinearFilter, // 默认值
+      })
+      .name("缩小滤镜")
+      .onChange(() => {
+        texture3.needsUpdate = true;
       });
 
     const animate = () => {
