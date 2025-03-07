@@ -44,6 +44,7 @@ const RendererToneMapping = lazy(() => import("../views/RendererToneMapping"));
 const EXR_TIF_PngDynamicRangeImg = lazy(
   () => import("../views/EXR_TIF_PngDynamicRangeImg")
 );
+const DepthRender = lazy(() => import("../views/DepthRender"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -269,6 +270,12 @@ const routes = [
             key: "/EXR_TIF_PngDynamicRangeImg",
             path: "/EXR_TIF_PngDynamicRangeImg",
             element: withLoadingComponent(<EXR_TIF_PngDynamicRangeImg />),
+          },
+          {
+            label: "深度渲染",
+            key: "/DepthRender",
+            path: "/DepthRender",
+            element: withLoadingComponent(<DepthRender />),
           },
         ],
       },
