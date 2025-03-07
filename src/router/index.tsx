@@ -45,6 +45,7 @@ const EXR_TIF_PngDynamicRangeImg = lazy(
   () => import("../views/EXR_TIF_PngDynamicRangeImg")
 );
 const DepthRender = lazy(() => import("../views/DepthRender"));
+const MaterialMixin = lazy(() => import("../views/MaterialMixin"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -276,6 +277,12 @@ const routes = [
             key: "/DepthRender",
             path: "/DepthRender",
             element: withLoadingComponent(<DepthRender />),
+          },
+          {
+            label: "材质混合",
+            key: "/MaterialMixin",
+            path: "/MaterialMixin",
+            element: withLoadingComponent(<MaterialMixin />),
           },
         ],
       },
