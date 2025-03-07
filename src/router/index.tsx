@@ -40,6 +40,7 @@ const DestroyMatrix = lazy(() => import("../views/DestroyMatrix"));
 const SettingControls = lazy(() => import("../views/SettingControls"));
 const TextureTransform = lazy(() => import("../views/TextureTransform"));
 const KTX2_DDS_TGATexture = lazy(() => import("../views/KTX2_DDS_TGATexture"));
+const RendererToneMapping = lazy(() => import("../views/RendererToneMapping"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -253,6 +254,12 @@ const routes = [
             key: "/KTX2_DDS_TGATexture",
             path: "/KTX2_DDS_TGATexture",
             element: withLoadingComponent(<KTX2_DDS_TGATexture />),
+          },
+          {
+            label: "色调映射",
+            key: "/RendererToneMapping",
+            path: "/RendererToneMapping",
+            element: withLoadingComponent(<RendererToneMapping />),
           },
         ],
       },
