@@ -41,6 +41,9 @@ const SettingControls = lazy(() => import("../views/SettingControls"));
 const TextureTransform = lazy(() => import("../views/TextureTransform"));
 const KTX2_DDS_TGATexture = lazy(() => import("../views/KTX2_DDS_TGATexture"));
 const RendererToneMapping = lazy(() => import("../views/RendererToneMapping"));
+const EXR_TIF_PngDynamicRangeImg = lazy(
+  () => import("../views/EXR_TIF_PngDynamicRangeImg")
+);
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -260,6 +263,12 @@ const routes = [
             key: "/RendererToneMapping",
             path: "/RendererToneMapping",
             element: withLoadingComponent(<RendererToneMapping />),
+          },
+          {
+            label: "exr_tif_png动态范围图",
+            key: "/EXR_TIF_PngDynamicRangeImg",
+            path: "/EXR_TIF_PngDynamicRangeImg",
+            element: withLoadingComponent(<EXR_TIF_PngDynamicRangeImg />),
           },
         ],
       },
