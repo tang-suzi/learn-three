@@ -242,7 +242,7 @@ const routes = [
         key: "textureMaterial",
         children: [
           {
-            label: "设置控制器",
+            label: "纹理变换",
             key: "/TextureTransform",
             path: "/TextureTransform",
             element: withLoadingComponent(<TextureTransform />),

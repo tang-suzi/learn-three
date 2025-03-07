@@ -107,10 +107,8 @@ const TextureTransform: FC = () => {
 
     // 放大滤镜
     const texture3 = textureLoader.load(
-      new URL(
-        "./../assets/texture/brick/brick_diffuse.jpg",
-        import.meta.url
-      ).href
+      new URL("./../assets/texture/brick/brick_diffuse.jpg", import.meta.url)
+        .href
     );
     const planeGeometry3 = new THREE.PlaneGeometry(1, 1);
     const planeMaterial3 = new THREE.MeshBasicMaterial({
@@ -135,6 +133,14 @@ const TextureTransform: FC = () => {
       .onChange(() => {
         texture3.needsUpdate = true;
       });
+
+    // 获取各向异性最大有效值
+    const maxAnisotropy = renderer.capabilities.getMaxAnisotropy();
+
+    console.log(maxAnisotropy);
+    gui.add(texture3, "anisotropy", 1, maxAnisotropy, 1).name("各向异性").onChange(() => {
+        texture3.needsUpdate = true;
+    });
 
     const animate = () => {
       requestAnimationFrame(animate);
