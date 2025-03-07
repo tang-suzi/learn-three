@@ -39,6 +39,7 @@ const IridescenceEffect = lazy(() => import("../views/IridescenceEffect"));
 const DestroyMatrix = lazy(() => import("../views/DestroyMatrix"));
 const SettingControls = lazy(() => import("../views/SettingControls"));
 const TextureTransform = lazy(() => import("../views/TextureTransform"));
+const KTX2_DDS_TGATexture = lazy(() => import("../views/KTX2_DDS_TGATexture"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -246,6 +247,12 @@ const routes = [
             key: "/TextureTransform",
             path: "/TextureTransform",
             element: withLoadingComponent(<TextureTransform />),
+          },
+          {
+            label: "不同格式纹理",
+            key: "/KTX2_DDS_TGATexture",
+            path: "/KTX2_DDS_TGATexture",
+            element: withLoadingComponent(<KTX2_DDS_TGATexture />),
           },
         ],
       },
