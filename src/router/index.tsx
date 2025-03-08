@@ -49,6 +49,7 @@ const MaterialMixin = lazy(() => import("../views/MaterialMixin"));
 const RenderIceJuice = lazy(() => import("../views/RenderIceJuice"));
 const ClipMaterial = lazy(() => import("../views/ClipMaterial"));
 const ClipScene = lazy(() => import("../views/ClipScene"));
+const TemplateRender = lazy(() => import("../views/TemplateRender"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -304,6 +305,12 @@ const routes = [
             key: "/ClipScene",
             path: "/ClipScene",
             element: withLoadingComponent(<ClipScene />),
+          },
+          {
+            label: "模板渲染",
+            key: "/TemplateRender",
+            path: "/TemplateRender",
+            element: withLoadingComponent(<TemplateRender />),
           },
         ],
       },
