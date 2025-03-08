@@ -50,6 +50,7 @@ const RenderIceJuice = lazy(() => import("../views/RenderIceJuice"));
 const ClipMaterial = lazy(() => import("../views/ClipMaterial"));
 const ClipScene = lazy(() => import("../views/ClipScene"));
 const TemplateRender = lazy(() => import("../views/TemplateRender"));
+const RenderMetalSection = lazy(() => import("../views/RenderMetalSection"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -311,6 +312,12 @@ const routes = [
             key: "/TemplateRender",
             path: "/TemplateRender",
             element: withLoadingComponent(<TemplateRender />),
+          },
+          {
+            label: "使用Depth模板渲染",
+            key: "/RenderMetalSection",
+            path: "/RenderMetalSection",
+            element: withLoadingComponent(<RenderMetalSection />),
           },
         ],
       },
