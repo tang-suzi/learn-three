@@ -47,6 +47,7 @@ const EXR_TIF_PngDynamicRangeImg = lazy(
 const DepthRender = lazy(() => import("../views/DepthRender"));
 const MaterialMixin = lazy(() => import("../views/MaterialMixin"));
 const RenderIceJuice = lazy(() => import("../views/RenderIceJuice"));
+const ClipMaterial = lazy(() => import("../views/ClipMaterial"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -290,6 +291,12 @@ const routes = [
             key: "/RenderIceJuice",
             path: "/RenderIceJuice",
             element: withLoadingComponent(<RenderIceJuice />),
+          },
+          {
+            label: "裁剪材料",
+            key: "/ClipMaterial",
+            path: "/ClipMaterial",
+            element: withLoadingComponent(<ClipMaterial />),
           },
         ],
       },
