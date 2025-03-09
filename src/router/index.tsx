@@ -51,6 +51,7 @@ const ClipMaterial = lazy(() => import("../views/ClipMaterial"));
 const ClipScene = lazy(() => import("../views/ClipScene"));
 const TemplateRender = lazy(() => import("../views/TemplateRender"));
 const RenderMetalSection = lazy(() => import("../views/RenderMetalSection"));
+const LightAndShadow = lazy(() => import("../views/LightAndShadow"));
 const GsapAnimate = lazy(() => import("../views/GsapAnimate"));
 
 const withLoadingComponent = (children: JSX.Element) => (
@@ -325,7 +326,14 @@ const routes = [
       {
         label: "灯光与阴影",
         key: "LightsAndShadows",
-        children: [],
+        children: [
+          {
+            label: "灯光和阴影",
+            key: "/LightAndShadow",
+            path: "/LightAndShadow",
+            element: withLoadingComponent(<LightAndShadow />),
+          },
+        ],
       },
       {
         label: "操作物体",
