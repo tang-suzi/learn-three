@@ -54,7 +54,7 @@ const TransparentTextureAndShadowSetting: FC = () => {
     pointLight.shadow.mapSize.height = 512; // default
     pointLight.shadow.camera.near = 0.5; // default
     pointLight.shadow.camera.far = 500; // default
-    // pointLight.shadow.bias = -0.01; // 阴影偏移
+    pointLight.shadow.bias = -0.01; // 阴影偏移
     const pointLightHelper = new THREE.CameraHelper(pointLight.shadow.camera);
     scene.add(pointLightHelper);
 
@@ -93,7 +93,7 @@ const TransparentTextureAndShadowSetting: FC = () => {
       transparent: true,
       side: THREE.DoubleSide,
       alphaTest: 0.5,
-    //   shadowSide: THREE.BackSide, // 消除正面阴影
+      shadowSide: THREE.BackSide, // 消除正面阴影
     });
     const box = new THREE.Mesh(boxGeometry, material3);
     box.castShadow = true;
