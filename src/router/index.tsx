@@ -55,6 +55,7 @@ const AmbientLightAndDirectionalLight = lazy(
   () => import("../views/AmbientLightAndDirectionalLight")
 );
 const UseSpotLight = lazy(() => import("../views/UseSpotLight"));
+const UsePointLight = lazy(() => import("../views/UsePointLight"));
 const GsapAnimate = lazy(() => import("../views/GsapAnimate"));
 
 const withLoadingComponent = (children: JSX.Element) => (
@@ -341,6 +342,12 @@ const routes = [
             key: "/UseSpotLight",
             path: "/UseSpotLight",
             element: withLoadingComponent(<UseSpotLight />),
+          },
+          {
+            label: "使用点光源",
+            key: "/UsePointLight",
+            path: "/UsePointLight",
+            element: withLoadingComponent(<UsePointLight />),
           },
         ],
       },

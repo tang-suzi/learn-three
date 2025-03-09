@@ -12,7 +12,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
  * 3. 设置物体投射阴影
  * 4. 设置地面或平面可以接收阴影
  */
-const UseSpotLight: FC = () => {
+const UsePointLight: FC = () => {
   const threeDemo = useRef<HTMLDivElement>(null);
   const hasInit = useRef(false);
   let scene: THREE.Scene | null = null;
@@ -43,27 +43,24 @@ const UseSpotLight: FC = () => {
     const ambient = new THREE.HemisphereLight(0xffffff, 0.15);
     scene.add(ambient);
 
-    const spotLight = new THREE.SpotLight(0xffffff, 1);
-    spotLight.position.set(0, 10, 0);
-    spotLight.target.position.set(0, 0, 0);
-    spotLight.castShadow = true;
+    const pointLight = new THREE.PointLight(0xffffff, 1);
+    pointLight.position.set(0, 5, 0);
+    pointLight.castShadow = true;
+    pointLight.decay = 0;
+    pointLight.distance = 15;
+    scene.add(pointLight);
 
-    spotLight.angle = Math.PI / 8;
-    spotLight.distance = 100;
-    spotLight.penumbra = 0.5;
-    spotLight.decay = 2;
+    pointLight.shadow.mapSize.width = 512; // default
+    pointLight.shadow.mapSize.height = 512; // default
+    pointLight.shadow.camera.near = 0.5; // default
+    pointLight.shadow.camera.far = 500; // default
+    const pointLightHelper = new THREE.CameraHelper(pointLight.shadow.camera);
+    scene.add(pointLightHelper);
 
-    spotLight.shadow.mapSize.width = 2048;
-    spotLight.shadow.mapSize.height = 2048;
-    scene.add(spotLight);
-    gui.add(spotLight, "angle", 0, Math.PI / 2);
-    gui.add(spotLight, "distance", 0, 100);
-    gui.add(spotLight, "penumbra", 0, 1);
-    gui.add(spotLight, "decay", 0, 10);
-    gui.add(spotLight.target.position, "x", -10, 10);
-
-    const spotLightHelper = new THREE.SpotLightHelper(spotLight);
-    scene.add(spotLightHelper);
+    gui.add(pointLight, "decay", 0, 10);
+    gui.add(pointLight, "distance", 0, 20);
+    gui.add(pointLight.shadow.mapSize, "width", 0, 1024);
+    gui.add(pointLight.shadow.mapSize, "height", 0, 1024);
 
     const geometry = new THREE.TorusKnotGeometry(1, 0.3, 100, 16);
     const material1 = new THREE.MeshPhysicalMaterial({
@@ -110,8 +107,6 @@ const UseSpotLight: FC = () => {
     scene.add(axesHelper);
     const render = () => {
       requestAnimationFrame(render);
-      spotLight.shadow.camera.updateProjectionMatrix();
-      spotLightHelper.update();
       controls?.update();
       renderer?.render(scene!, camera!);
     };
@@ -131,4 +126,4 @@ const UseSpotLight: FC = () => {
   );
 };
 
-export default UseSpotLight;
+export default UsePointLight;
