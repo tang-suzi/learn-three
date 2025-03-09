@@ -51,6 +51,7 @@ const ClipMaterial = lazy(() => import("../views/ClipMaterial"));
 const ClipScene = lazy(() => import("../views/ClipScene"));
 const TemplateRender = lazy(() => import("../views/TemplateRender"));
 const RenderMetalSection = lazy(() => import("../views/RenderMetalSection"));
+const GsapAnimate = lazy(() => import("../views/GsapAnimate"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -334,7 +335,14 @@ const routes = [
       {
         label: "动画",
         key: "Animation",
-        children: [],
+        children: [
+          {
+            label: "gsap动画",
+            key: "/GsapAnimate",
+            path: "/GsapAnimate",
+            element: withLoadingComponent(<GsapAnimate />),
+          },
+        ],
       },
       {
         label: "粒子特效",
