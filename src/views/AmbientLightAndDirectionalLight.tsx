@@ -10,7 +10,7 @@ import { GUI } from "three/examples/jsm/libs/lil-gui.module.min.js";
  * 3. 设置物体投射阴影
  * 4. 设置地面或平面可以接收阴影
  */
-const LightAndShadow: FC = () => {
+const AmbientLightAndDirectionalLight: FC = () => {
   const threeDemo = useRef<HTMLDivElement>(null);
   const hasInit = useRef(false);
   let scene: THREE.Scene | null = null;
@@ -40,7 +40,7 @@ const LightAndShadow: FC = () => {
     // 环境光 不能用来投射阴影，因为它没有方向。
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
     scene.add(ambientLight);
-    // 平行光 可以投射阴影
+    // 平行光 可以投射阴影，灯光有范围
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight.position.set(0, 10, 0);
     // 默认平行光的目标是原点
@@ -49,6 +49,31 @@ const LightAndShadow: FC = () => {
 
     // 设置光投射阴影
     directionalLight.castShadow = true;
+
+    // 平行光相机属性
+    directionalLight.shadow.camera.left = -10;
+    directionalLight.shadow.camera.right = 10;
+    directionalLight.shadow.camera.top = 10;
+    directionalLight.shadow.camera.bottom = -10;
+    // directionalLight.shadow.camera.near = 0.5;
+    // directionalLight.shadow.camera.far = 50;
+    const directionalLightFolder = gui.addFolder("平行光");
+    directionalLightFolder.add(directionalLight.shadow.camera, "left", -10, 10);
+    directionalLightFolder.add(directionalLight.shadow.camera, "top", -10, 10);
+    directionalLightFolder.add(
+      directionalLight.shadow.camera,
+      "right",
+      -10,
+      10
+    );
+    directionalLightFolder.add(
+      directionalLight.shadow.camera,
+      "bottom",
+      -10,
+      10
+    );
+    directionalLightFolder.add(directionalLight.shadow.camera, "near", -10, 10);
+    directionalLightFolder.add(directionalLight.shadow.camera, "far", -10, 500);
     // 平行光辅助线
     const directionalLightHelper = new THREE.CameraHelper(
       directionalLight.shadow.camera
@@ -64,6 +89,7 @@ const LightAndShadow: FC = () => {
     torusKnot.castShadow = true;
     torusKnot.receiveShadow = true;
     scene.add(torusKnot);
+    console.log(gui)
 
     const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
     const material2 = new THREE.MeshPhysicalMaterial({
@@ -73,6 +99,8 @@ const LightAndShadow: FC = () => {
     sphere.castShadow = true;
     sphere.receiveShadow = true;
     scene.add(sphere);
+
+    gui.add(sphere.position, "z", -10, 10).name("小球Z轴位置");
 
     const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
     const material3 = new THREE.MeshPhysicalMaterial({
@@ -100,6 +128,8 @@ const LightAndShadow: FC = () => {
     scene.add(axesHelper);
     const render = () => {
       requestAnimationFrame(render);
+      directionalLight.shadow.camera.updateProjectionMatrix();
+      directionalLightHelper.update();
       controls?.update();
       renderer?.render(scene!, camera!);
     };
@@ -119,4 +149,4 @@ const LightAndShadow: FC = () => {
   );
 };
 
-export default LightAndShadow;
+export default AmbientLightAndDirectionalLight;
