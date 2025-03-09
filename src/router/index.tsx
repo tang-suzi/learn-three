@@ -54,6 +54,7 @@ const RenderMetalSection = lazy(() => import("../views/RenderMetalSection"));
 const AmbientLightAndDirectionalLight = lazy(
   () => import("../views/AmbientLightAndDirectionalLight")
 );
+const UseSpotLight = lazy(() => import("../views/UseSpotLight"));
 const GsapAnimate = lazy(() => import("../views/GsapAnimate"));
 
 const withLoadingComponent = (children: JSX.Element) => (
@@ -334,6 +335,12 @@ const routes = [
             key: "/AmbientLightAndDirectionalLight",
             path: "/AmbientLightAndDirectionalLight",
             element: withLoadingComponent(<AmbientLightAndDirectionalLight />),
+          },
+          {
+            label: "使用聚光灯",
+            key: "/UseSpotLight",
+            path: "/UseSpotLight",
+            element: withLoadingComponent(<UseSpotLight />),
           },
         ],
       },
