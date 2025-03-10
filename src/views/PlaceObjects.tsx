@@ -4,6 +4,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { GUI } from "three/examples/jsm/libs/lil-gui.module.min.js";
+import { TransformControls } from "three/addons/controls/TransformControls.js";
 
 const PlaceObjects: FC = () => {
   const threeDemo = useRef<HTMLDivElement>(null);
@@ -14,6 +15,7 @@ const PlaceObjects: FC = () => {
   let controls: OrbitControls | null = null;
   let gltfLoader: GLTFLoader | null = null;
   let dracoLoader: DRACOLoader | null = null;
+  let transformControls: TransformControls | null = null;
   let axesHelper: THREE.AxesHelper | null = null;
   let gridHelper: THREE.GridHelper | null = null;
   let gui: GUI | null = null;
@@ -23,6 +25,7 @@ const PlaceObjects: FC = () => {
     盆栽: "./../assets/texture/model/house/plants-min.glb",
     沙发: "./../assets/texture/model/house/sofa_chair_min.glb",
   };
+  let renderScene = null;
   const loadMesh = (name: string): Promise<THREE.Group> => {
     return new Promise((resolve, reject) => {
       gltfLoader?.load(
@@ -63,12 +66,14 @@ const PlaceObjects: FC = () => {
         await loadMesh("盆栽");
         if (basicSceneMesh.get("盆栽")) {
           scene?.add(basicSceneMesh.get("盆栽") as THREE.Object3D);
+          transformControlsSelect(basicSceneMesh.get("盆栽") as THREE.Group);
         }
       },
       addSofa: async () => {
         await loadMesh("沙发");
         if (basicSceneMesh.get("沙发")) {
           scene?.add(basicSceneMesh.get("沙发") as THREE.Object3D);
+          transformControlsSelect(basicSceneMesh.get("沙发") as THREE.Group);
         }
       },
     };
@@ -78,6 +83,19 @@ const PlaceObjects: FC = () => {
     const folder = gui.addFolder("添加物体");
     folder.add(eventObj, "addPlant").name("添加盆栽");
     folder.add(eventObj, "addSofa").name("添加沙发");
+  };
+  const initTransformControls = () => {
+    transformControls = new TransformControls(camera, renderer.domElement);
+    transformControls.addEventListener("change", renderScene);
+    // 拖动物体时禁用轨道控制器
+    transformControls.addEventListener("dragging-changed", (event) => {
+      controls.enabled = !event.value; // 禁用轨道控制器
+    });
+  };
+  const transformControlsSelect = (mesh) => {
+    transformControls.attach(mesh);
+    const transformControlsHelper = transformControls.getHelper();
+    scene?.add(transformControlsHelper);
   };
   const init = () => {
     initGUI();
@@ -118,12 +136,13 @@ const PlaceObjects: FC = () => {
     gridHelper.renderOrder = -1;
     scene.add(gridHelper);
     threeDemo.current?.appendChild(gui.domElement);
-    const render = () => {
-      requestAnimationFrame(render);
+    renderScene = () => {
+      requestAnimationFrame(renderScene);
       controls?.update();
       renderer?.render(scene as THREE.Scene, camera as THREE.Camera);
     };
-    render();
+    renderScene();
+    initTransformControls();
   };
   useEffect(() => {
     if (!hasInit.current) {
