@@ -107,6 +107,37 @@ const PlaceObjects: FC = () => {
     folder.add(eventObj, "addPlant").name("添加盆栽");
     folder.add(eventObj, "addSofa").name("添加沙发");
     meshesFolder = gui.addFolder("场景物体");
+
+    const transformMode = {
+      setTranslate: () => {
+        transformControls.setMode("translate");
+      },
+      setRotate: () => {
+        transformControls.setMode("rotate");
+      },
+      setScale: () => {
+        transformControls.setMode("scale");
+      },
+    };
+    const transformFolder = gui.addFolder("物体操作");
+    transformFolder.add(transformMode, "setTranslate").name("平移");
+    transformFolder.add(transformMode, "setRotate").name("旋转");
+    transformFolder.add(transformMode, "setScale").name("缩放");
+    window?.addEventListener("keydown", (event) => {
+      switch (event.key) {
+        case "t":
+          transformControls.setMode("translate");
+          break;
+        case "r":
+          transformControls.setMode("rotate");
+          break;
+        case "s":
+          transformControls.setMode("scale");
+          break;
+        default:
+          return;
+      }
+    });
   };
   const initTransformControls = () => {
     transformControls = new TransformControls(camera, renderer.domElement);
