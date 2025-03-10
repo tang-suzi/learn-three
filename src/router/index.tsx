@@ -62,6 +62,7 @@ const TransparentTextureAndShadowSetting = lazy(
 const LargeSceneCascadeShadowSettings = lazy(
   () => import("../views/LargeSceneCascadeShadowSettings")
 );
+const PlaceObjects = lazy(() => import("../views/PlaceObjects"));
 const GsapAnimate = lazy(() => import("../views/GsapAnimate"));
 
 const withLoadingComponent = (children: JSX.Element) => (
@@ -374,7 +375,14 @@ const routes = [
       {
         label: "操作物体",
         key: "ManipulatingObjects",
-        children: [],
+        children: [
+          {
+            label: "PlaceObjects",
+            key: "/PlaceObjects",
+            path: "/PlaceObjects",
+            element: withLoadingComponent(<PlaceObjects />),
+          },
+        ],
       },
       {
         label: "动画",
