@@ -59,6 +59,9 @@ const UsePointLight = lazy(() => import("../views/UsePointLight"));
 const TransparentTextureAndShadowSetting = lazy(
   () => import("../views/TransparentTextureAndShadowSetting")
 );
+const LargeSceneCascadeShadowSettings = lazy(
+  () => import("../views/LargeSceneCascadeShadowSettings")
+);
 const GsapAnimate = lazy(() => import("../views/GsapAnimate"));
 
 const withLoadingComponent = (children: JSX.Element) => (
@@ -359,6 +362,12 @@ const routes = [
             element: withLoadingComponent(
               <TransparentTextureAndShadowSetting />
             ),
+          },
+          {
+            label: "大场景级联阴影设置",
+            key: "/LargeSceneCascadeShadowSettings",
+            path: "/LargeSceneCascadeShadowSettings",
+            element: withLoadingComponent(<LargeSceneCascadeShadowSettings />),
           },
         ],
       },
