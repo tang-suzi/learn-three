@@ -118,11 +118,22 @@ const PlaceObjects: FC = () => {
       setScale: () => {
         transformControls.setMode("scale");
       },
+      toggleSpace: function () {
+        transformControls.setSpace(
+          transformControls.space === "local" ? "world" : "local"
+        );
+      },
+      cancelSelect: function () {
+        transformControls.detach();
+      },
     };
     const transformFolder = gui.addFolder("物体操作");
     transformFolder.add(transformMode, "setTranslate").name("平移");
     transformFolder.add(transformMode, "setRotate").name("旋转");
     transformFolder.add(transformMode, "setScale").name("缩放");
+    transformFolder.add(transformMode, "toggleSpace").name("切换空间");
+    transformFolder.add(transformMode, "cancelSelect").name("取消选择");
+
     window?.addEventListener("keydown", (event) => {
       switch (event.key) {
         case "t":
