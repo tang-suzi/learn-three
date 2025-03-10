@@ -21,6 +21,7 @@ const PlaceObjects: FC = () => {
   let gui: GUI | null = null;
   let basicScene: THREE.Scene | null = null;
   const basicSceneMesh = new Map<string, THREE.Group>();
+  let meshesFolder: GUI.Folder | null = null;
   const meshList = {
     盆栽: "./../assets/texture/model/house/plants-min.glb",
     沙发: "./../assets/texture/model/house/sofa_chair_min.glb",
@@ -32,7 +33,8 @@ const PlaceObjects: FC = () => {
         new URL(meshList[name as keyof typeof meshList], import.meta.url).href,
         (gltf) => {
           const mesh = gltf.scene;
-          basicSceneMesh.set(name, mesh); // 存入 Map
+          mesh.name = `${name}-${new Date().getTime()}`;
+          basicSceneMesh.set(mesh.name, mesh); // 存入 Map
           resolve(mesh); // 加载完成后返回模型
         },
         undefined,
@@ -63,17 +65,38 @@ const PlaceObjects: FC = () => {
         }
       },
       addPlant: async () => {
-        await loadMesh("盆栽");
-        if (basicSceneMesh.get("盆栽")) {
-          scene?.add(basicSceneMesh.get("盆栽") as THREE.Object3D);
-          transformControlsSelect(basicSceneMesh.get("盆栽") as THREE.Group);
+        const { name } = await loadMesh("盆栽");
+        console.log(basicSceneMesh);
+        if (basicSceneMesh.get(name)) {
+          scene?.add(basicSceneMesh.get(name) as THREE.Object3D);
+          transformControlsSelect(basicSceneMesh.get(name) as THREE.Group);
+          meshesFolder
+            .add(
+              {
+                toggleMesh: () => {
+                  transformControlsSelect(basicSceneMesh.get(name));
+                },
+              },
+              "toggleMesh"
+            )
+            .name(name);
         }
       },
       addSofa: async () => {
-        await loadMesh("沙发");
-        if (basicSceneMesh.get("沙发")) {
-          scene?.add(basicSceneMesh.get("沙发") as THREE.Object3D);
-          transformControlsSelect(basicSceneMesh.get("沙发") as THREE.Group);
+        const { name } = await loadMesh("沙发");
+        if (basicSceneMesh.get(name)) {
+          scene?.add(basicSceneMesh.get(name) as THREE.Object3D);
+          transformControlsSelect(basicSceneMesh.get(name) as THREE.Group);
+          meshesFolder
+            .add(
+              {
+                toggleMesh: () => {
+                  transformControlsSelect(basicSceneMesh.get(name));
+                },
+              },
+              "toggleMesh"
+            )
+            .name(name);
         }
       },
     };
@@ -83,6 +106,7 @@ const PlaceObjects: FC = () => {
     const folder = gui.addFolder("添加物体");
     folder.add(eventObj, "addPlant").name("添加盆栽");
     folder.add(eventObj, "addSofa").name("添加沙发");
+    meshesFolder = gui.addFolder("场景物体");
   };
   const initTransformControls = () => {
     transformControls = new TransformControls(camera, renderer.domElement);
