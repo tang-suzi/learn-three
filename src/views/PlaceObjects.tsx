@@ -99,10 +99,25 @@ const PlaceObjects: FC = () => {
             .name(name);
         }
       },
+      isLight: true,
     };
     gui.add(eventObj, "showGridHelper").name("添加网格");
     gui.add(eventObj, "showAxesHelper").name("添加坐标轴");
     gui.add(eventObj, "addScene").name("添加房间模型");
+    gui
+      .add(eventObj, "isLight")
+      .name("是否开启灯光")
+      .onChange((value) => {
+        // 修改环境光或者修改renderer的色调预设
+        const light = scene.children.find(
+          (item) => item instanceof THREE.Light
+        );
+        if (value) {
+          light.intensity = 1;
+        } else {
+          light.intensity = 0.1;
+        }
+      });
     const folder = gui.addFolder("添加物体");
     folder.add(eventObj, "addPlant").name("添加盆栽");
     folder.add(eventObj, "addSofa").name("添加沙发");
@@ -126,12 +141,49 @@ const PlaceObjects: FC = () => {
       cancelSelect: function () {
         transformControls.detach();
       },
+      translateSnapNum: null,
+      rotateSnapNum: 0,
+      scaleSnapNum: 0,
+      isClampGroup: false,
     };
     const transformFolder = gui.addFolder("物体操作");
     transformFolder.add(transformMode, "setTranslate").name("平移");
     transformFolder.add(transformMode, "setRotate").name("旋转");
     transformFolder.add(transformMode, "setScale").name("缩放");
     transformFolder.add(transformMode, "toggleSpace").name("切换空间");
+    transformFolder
+      .add(transformMode, "translateSnapNum", {
+        不固定: null,
+        1: 1,
+        0.1: 0.1,
+        10: 10,
+      })
+      .name("平移步长")
+      .onChange(() => {
+        transformControls.setTranslationSnap(transformMode.translateSnapNum);
+      });
+    transformFolder
+      .add(transformMode, "rotateSnapNum", 0, 1)
+      .name("旋转步长")
+      .onChange(() => {
+        transformControls.setRotationSnap(transformMode.rotateSnapNum);
+      });
+    transformFolder
+      .add(transformMode, "scaleSnapNum", 0, 2)
+      .name("缩放步长")
+      .onChange(() => {
+        transformControls.setScaleSnap(transformMode.scaleSnapNum);
+      });
+    transformFolder
+      .add(transformMode, "isClampGroup")
+      .name("吸附地面")
+      .onChange((value) => {
+        transformControls.addEventListener("change", () => {
+          if (transformMode.isClampGroup) {
+            transformControls.object.position.y = 0;
+          }
+        });
+      });
     transformFolder.add(transformMode, "cancelSelect").name("取消选择");
 
     window?.addEventListener("keydown", (event) => {
