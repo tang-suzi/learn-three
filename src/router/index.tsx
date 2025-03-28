@@ -69,6 +69,9 @@ const UseAnimation = lazy(() => import("../views/Animation/UseAnimation"));
 const CreateKeyframes = lazy(
   () => import("../views/Animation/CreateKeyframes")
 );
+const NumberKeyframes = lazy(
+  () => import("../views/Animation/NumberKeyframes")
+);
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -404,6 +407,12 @@ const routes = [
             key: "/CreateKeyframes",
             path: "/CreateKeyframes",
             element: withLoadingComponent(<CreateKeyframes />),
+          },
+          {
+            label: "单一关键帧",
+            key: "/NumberKeyframes",
+            path: "/NumberKeyframes",
+            element: withLoadingComponent(<NumberKeyframes />),
           },
           {
             label: "gsap动画",
