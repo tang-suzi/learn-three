@@ -54,7 +54,19 @@ const CreateKeyframes: FC = () => {
       [true, false, true, false, true]
     );
 
-    const clip = new THREE.AnimationClip("move", 4, [positionKF, rotationKF, boolenKF]);
+    const colorKF = new THREE.ColorKeyframeTrack(
+      "cube.material.color",
+      [0, 2, 4],
+      [1, 0, 1, 1, 1, 0, 1, 0, 1],
+      THREE.InterpolateSmooth
+    );
+
+    const clip = new THREE.AnimationClip("move", 4, [
+      positionKF,
+      rotationKF,
+      //   boolenKF,
+      colorKF,
+    ]);
     const action = mixer.clipAction(clip);
     // console.log(action);
     action.play();
