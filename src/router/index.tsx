@@ -65,6 +65,11 @@ const LargeSceneCascadeShadowSettings = lazy(
 const PlaceObjects = lazy(() => import("../views/PlaceObjects"));
 const GsapAnimate = lazy(() => import("../views/GsapAnimate"));
 
+const UseAnimation = lazy(() => import("../views/Animation/UseAnimation"));
+const CreateKeyframes = lazy(
+  () => import("../views/Animation/CreateKeyframes")
+);
+
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
 );
@@ -388,6 +393,18 @@ const routes = [
         label: "动画",
         key: "Animation",
         children: [
+          {
+            label: "使用动画",
+            key: "/UseAnimation",
+            path: "/UseAnimation",
+            element: withLoadingComponent(<UseAnimation />),
+          },
+          {
+            label: "创建关键帧",
+            key: "/CreateKeyframes",
+            path: "/CreateKeyframes",
+            element: withLoadingComponent(<CreateKeyframes />),
+          },
           {
             label: "gsap动画",
             key: "/GsapAnimate",
