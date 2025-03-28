@@ -48,7 +48,13 @@ const CreateKeyframes: FC = () => {
       finalArr
     );
 
-    const clip = new THREE.AnimationClip("move", 4, [positionKF, rotationKF]);
+    const boolenKF = new THREE.BooleanKeyframeTrack(
+      "cube.visible",
+      [0, 1, 2, 3, 4],
+      [true, false, true, false, true]
+    );
+
+    const clip = new THREE.AnimationClip("move", 4, [positionKF, rotationKF, boolenKF]);
     const action = mixer.clipAction(clip);
     // console.log(action);
     action.play();
