@@ -72,6 +72,7 @@ const CreateKeyframes = lazy(
 const NumberKeyframes = lazy(
   () => import("../views/Animation/NumberKeyframes")
 );
+const AnimationMixer = lazy(() => import("../views/Animation/AnimationMixer"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -413,6 +414,12 @@ const routes = [
             key: "/NumberKeyframes",
             path: "/NumberKeyframes",
             element: withLoadingComponent(<NumberKeyframes />),
+          },
+          {
+            label: "动画混合器",
+            key: "/AnimationMixer",
+            path: "/AnimationMixer",
+            element: withLoadingComponent(<AnimationMixer />),
           },
           {
             label: "gsap动画",
