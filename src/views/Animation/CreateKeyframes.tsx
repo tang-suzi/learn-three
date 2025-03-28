@@ -20,14 +20,35 @@ const CreateKeyframes: FC = () => {
     const cube = new THREE.Mesh(geometry, material);
     cube.name = "cube";
     scene?.add(cube);
+    // 创建平移动画帧
+    mixer = new THREE.AnimationMixer(cube);
     const positionKF = new THREE.VectorKeyframeTrack(
       "cube.position",
       [0, 1, 2, 3, 4],
       [0, 0, 0, 1, 0, 0, 2, 0, 0, 1, 0, 0, 0, 0, 0]
     );
-    mixer = new THREE.AnimationMixer(cube);
     // console.log(mixer);
-    const clip = new THREE.AnimationClip("move", 4, [positionKF]);
+
+    // 创建旋转动画帧
+    const quaternion = new THREE.Quaternion();
+    quaternion.setFromAxisAngle(new THREE.Vector3(1, 0, 0), 0); // 使用轴角旋转
+    const quaternion1 = new THREE.Quaternion();
+    quaternion1.setFromEuler(new THREE.Euler(Math.PI, 0, 0)); // 使用欧拉角旋转180度
+    const quaternion2 = new THREE.Quaternion();
+    quaternion2.setFromAxisAngle(new THREE.Vector3(1, 0, 0), 0);
+    const finalArr = [
+      ...quaternion.toArray(),
+      ...quaternion1.toArray(),
+      ...quaternion2.toArray(),
+    ];
+    console.log(finalArr);
+    const rotationKF = new THREE.QuaternionKeyframeTrack(
+      "cube.quaternion",
+      [0, 2, 4],
+      finalArr
+    );
+
+    const clip = new THREE.AnimationClip("move", 4, [positionKF, rotationKF]);
     const action = mixer.clipAction(clip);
     // console.log(action);
     action.play();
