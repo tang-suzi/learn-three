@@ -12,7 +12,7 @@ const SimulatingGalaxy: FC = () => {
   let girdHelper: THREE.GridHelper | null = null;
   let controls: OrbitControls | null = null;
   let textureLoader: THREE.Texture | null = null;
-  //   const clock: THREE.Clock = new THREE.Clock();
+  const clock: THREE.Clock = new THREE.Clock();
   const params = {
     count: 3000,
     size: 0.1,
@@ -30,6 +30,8 @@ const SimulatingGalaxy: FC = () => {
       new URL("./../../assets/texture/particles/1.png", import.meta.url).href
     );
     geometry = new THREE.BufferGeometry();
+    const centerColor = new THREE.Color(params.color);
+    const endColor = new THREE.Color(params.endColor);
     const positions = new Float32Array(params.count * 3);
     const colors = new Float32Array(params.count * 3);
     for (let i = 0; i < params.count; i++) {
@@ -52,7 +54,12 @@ const SimulatingGalaxy: FC = () => {
         Math.sin(branchAngel + distance * params.rotateScale) * distance +
         randomY;
       positions[current + 2] = 0 + randomZ;
-      colors[i] = Math.random();
+
+      const mixColor = centerColor.clone();
+      mixColor.lerp(endColor, distance / params.radius);
+      colors[current] = mixColor.r;
+      colors[current + 1] = mixColor.g;
+      colors[current + 2] = mixColor.b;
     }
     geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
     geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
@@ -90,6 +97,8 @@ const SimulatingGalaxy: FC = () => {
     scene.add(girdHelper);
     const points = createStars();
     const animate = () => {
+      const time = clock.getElapsedTime();
+      points.rotation.z = time * 0.3;
       requestAnimationFrame(animate);
       controls?.update();
       renderer.render(scene!, camera!);
