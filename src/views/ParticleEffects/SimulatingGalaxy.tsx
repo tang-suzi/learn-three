@@ -14,7 +14,7 @@ const SimulatingGalaxy: FC = () => {
   let textureLoader: THREE.Texture | null = null;
   //   const clock: THREE.Clock = new THREE.Clock();
   const params = {
-    count: 300,
+    count: 3000,
     size: 0.1,
     radius: 5,
     branch: 3,
@@ -36,7 +36,8 @@ const SimulatingGalaxy: FC = () => {
       // 分支角度
       const branchAngel = (i % params.branch) * ((2 * Math.PI) / params.branch);
       // 点位距离圆心的距离
-      const distance = Math.random() * params.radius;
+      const distance =
+        Math.random() * params.radius * Math.pow(Math.random(), 3);
 
       const current = i * 3;
       positions[current] =
