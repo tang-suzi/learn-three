@@ -18,9 +18,9 @@ const SimulatingGalaxy: FC = () => {
     size: 0.1,
     radius: 5,
     branch: 3,
-    color: "#ffae23",
+    color: "#ff0000",
     rotateScale: 0.3,
-    endColor: "#1b315e",
+    endColor: "#00ffff",
   };
   let geometry = null;
   let material = null;
