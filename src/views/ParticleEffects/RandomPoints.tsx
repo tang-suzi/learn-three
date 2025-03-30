@@ -11,6 +11,7 @@ const RandomPoints: FC = () => {
   let girdHelper: THREE.GridHelper | null = null;
   let controls: OrbitControls | null = null;
   let textureLoader: THREE.Texture | null = null;
+  const clock: THREE.Clock = new THREE.Clock();
   const params: object = {
     count: 5000,
     size: 0.1,
@@ -53,10 +54,11 @@ const RandomPoints: FC = () => {
     });
     const points = new THREE.Points(particlesGeometry, material);
     scene?.add(points);
+    return points;
   };
   const init = () => {
     scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+    camera = new THREE.PerspectiveCamera(75, 1, 0.1, 30);
     camera.position.set(3, 3, 8);
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(400, 400);
@@ -68,9 +70,11 @@ const RandomPoints: FC = () => {
     scene.add(girdHelper);
     controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
-    createRandomPoint();
+    const points = createRandomPoint();
     const animate = () => {
       requestAnimationFrame(animate);
+      const time = clock.getElapsedTime();
+      points.rotation.x = time * 0.3;
       controls?.update();
       renderer.render(scene!, camera!);
     };
