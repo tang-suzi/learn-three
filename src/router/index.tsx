@@ -79,6 +79,9 @@ const UsePointMaterial = lazy(
 const RandomPoints = lazy(
   () => import("../views/ParticleEffects/RandomPoints")
 );
+const SimulatingGalaxy = lazy(
+  () => import("../views/ParticleEffects/SimulatingGalaxy")
+);
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -450,6 +453,12 @@ const routes = [
             key: "/RandomPoints",
             path: "/RandomPoints",
             element: withLoadingComponent(<RandomPoints />),
+          },
+          {
+            label: "模拟星系",
+            key: "/SimulatingGalaxy",
+            path: "/SimulatingGalaxy",
+            element: withLoadingComponent(<SimulatingGalaxy />),
           },
         ],
       },
