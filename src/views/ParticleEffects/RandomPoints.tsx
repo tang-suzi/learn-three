@@ -21,7 +21,7 @@ const RandomPoints: FC = () => {
     endColor: "#1b315e",
   };
   const createRandomPoint = () => {
-    const textureLoader = new THREE.TextureLoader();
+    textureLoader = new THREE.TextureLoader();
     const texture = textureLoader.load(
       new URL("./../../assets/texture/particles/1.png", import.meta.url).href
     );
