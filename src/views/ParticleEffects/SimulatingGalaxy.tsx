@@ -38,13 +38,20 @@ const SimulatingGalaxy: FC = () => {
       // 点位距离圆心的距离
       const distance =
         Math.random() * params.radius * Math.pow(Math.random(), 3);
-
+      const randomX =
+        (Math.pow(Math.random() * 2 - 1, 3) * (params.radius - distance)) / 5;
+      const randomY =
+        (Math.pow(Math.random() * 2 - 1, 3) * (params.radius - distance)) / 5;
+      const randomZ =
+        (Math.pow(Math.random() * 2 - 1, 3) * (params.radius - distance)) / 5;
       const current = i * 3;
       positions[current] =
-        Math.cos(branchAngel + distance * params.rotateScale) * distance;
+        Math.cos(branchAngel + distance * params.rotateScale) * distance +
+        randomX;
       positions[current + 1] =
-        Math.sin(branchAngel + distance * params.rotateScale) * distance;
-      positions[current + 2] = 0;
+        Math.sin(branchAngel + distance * params.rotateScale) * distance +
+        randomY;
+      positions[current + 2] = 0 + randomZ;
       colors[i] = Math.random();
     }
     geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
