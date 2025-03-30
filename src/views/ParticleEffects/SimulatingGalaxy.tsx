@@ -14,7 +14,7 @@ const SimulatingGalaxy: FC = () => {
   let textureLoader: THREE.Texture | null = null;
   //   const clock: THREE.Clock = new THREE.Clock();
   const params = {
-    count: 100,
+    count: 300,
     size: 0.1,
     radius: 5,
     branch: 3,
@@ -33,9 +33,16 @@ const SimulatingGalaxy: FC = () => {
     const positions = new Float32Array(params.count * 3);
     const colors = new Float32Array(params.count * 3);
     for (let i = 0; i < params.count; i++) {
+      // 分支角度
+      const branchAngel = (i % params.branch) * ((2 * Math.PI) / params.branch);
+      // 点位距离圆心的距离
+      const distance = Math.random() * params.radius;
+
       const current = i * 3;
-      positions[current] = Math.random() * params.radius;
-      positions[current + 1] = 0;
+      positions[current] =
+        Math.cos(branchAngel + distance * params.rotateScale) * distance;
+      positions[current + 1] =
+        Math.sin(branchAngel + distance * params.rotateScale) * distance;
       positions[current + 2] = 0;
       colors[i] = Math.random();
     }
