@@ -73,6 +73,12 @@ const NumberKeyframes = lazy(
   () => import("../views/Animation/NumberKeyframes")
 );
 const AnimationMixer = lazy(() => import("../views/Animation/AnimationMixer"));
+const UsePointMaterial = lazy(
+  () => import("../views/ParticleEffects/UsePointMaterial")
+);
+const RandomPoints = lazy(
+  () => import("../views/ParticleEffects/RandomPoints")
+);
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -432,7 +438,20 @@ const routes = [
       {
         label: "粒子特效",
         key: "ParticleEffects",
-        children: [],
+        children: [
+          {
+            label: "使用点材质",
+            key: "/UsePointMaterial",
+            path: "/UsePointMaterial",
+            element: withLoadingComponent(<UsePointMaterial />),
+          },
+          {
+            label: "随机点",
+            key: "/RandomPoints",
+            path: "/RandomPoints",
+            element: withLoadingComponent(<RandomPoints />),
+          },
+        ],
       },
       {
         label: "光线投射与物体交互",
