@@ -8,9 +8,7 @@ const DifferentMaterials = lazy(() => import("./../views/DifferentMaterials"));
 const AddMaterial = lazy(() => import("./../views/AddMaterial"));
 const FogScene = lazy(() => import("./../views/FogScene"));
 const LoadGltfModel = lazy(() => import("./../views/LoadGltfModel"));
-const RaycastingInteraction = lazy(
-  () => import("./../views/RaycastingInteraction")
-);
+
 const TweenAnimation = lazy(() => import("./../views/TweenAnimation"));
 const UVPropSetting = lazy(() => import("./../views/UVPropSetting"));
 const NormalVerctor = lazy(() => import("./../views/NormalVerctor"));
@@ -83,6 +81,15 @@ const SimulatingGalaxy = lazy(
   () => import("../views/ParticleEffects/SimulatingGalaxy")
 );
 
+const RaycastingInteraction = lazy(
+  () =>
+    import("./../views/RaycastingAndObjectInteraction/RaycastingInteraction")
+);
+const RaycastingObjectInteraction = lazy(
+  () =>
+    import("./../views/RaycastingAndObjectInteraction/RaycastingObjectInteraction")
+);
+
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
 );
@@ -145,12 +152,6 @@ const routes = [
             key: "/LoadGltfModel",
             path: "/LoadGltfModel",
             element: withLoadingComponent(<LoadGltfModel />),
-          },
-          {
-            label: "光线投射3D场景交互",
-            key: "/RaycastingInteraction",
-            path: "/RaycastingInteraction",
-            element: withLoadingComponent(<RaycastingInteraction />),
           },
           {
             label: "补间动画",
@@ -465,7 +466,20 @@ const routes = [
       {
         label: "光线投射与物体交互",
         key: "RaycastingAndObjectInteraction",
-        children: [],
+        children: [
+          {
+            label: "光线投射到物体",
+            key: "/RaycastingInteraction",
+            path: "/RaycastingInteraction",
+            element: withLoadingComponent(<RaycastingInteraction />),
+          },
+          {
+            label: "光线投射物体交互",
+            key: "/RaycastingObjectInteraction",
+            path: "/RaycastingObjectInteraction",
+            element: withLoadingComponent(<RaycastingObjectInteraction />),
+          },
+        ],
       },
 
       {
