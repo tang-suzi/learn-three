@@ -1,0 +1,25 @@
+.page {
+  width: 100%;
+  aspect-ratio: 16/9;
+  display: flex;
+  color: #ccc;
+  background-color: #333;
+  position: relative;
+  margin-bottom: 52px;
+}
+
+.page h3 {
+  font-size: 30px;
+  position: absolute;
+}
+
+canvas {
+  position: fixed;
+}
+
+button {
+  position: absolute;
+  z-index: 5;
+  right: 20px;
+  top: 10px;
+}

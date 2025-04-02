@@ -87,8 +87,11 @@ const RaycastingInteraction = lazy(
 );
 const RaycastingObjectInteraction = lazy(
   () =>
-    import("./../views/RaycastingAndObjectInteraction/RaycastingObjectInteraction")
+    import(
+      "./../views/RaycastingAndObjectInteraction/RaycastingObjectInteraction"
+    )
 );
+const FullScreenScroll = lazy(() => import("./../views/FullScreenScroll"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -488,6 +491,12 @@ const routes = [
         children: [],
       },
     ],
+  },
+  {
+    label: "全屏滚动",
+    key: "FullScreenScroll",
+    path: "/FullScreenScroll",
+    element: withLoadingComponent(<FullScreenScroll />),
   },
 ];
 
