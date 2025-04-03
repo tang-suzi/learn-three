@@ -51,7 +51,7 @@ const MaterialBindCannon: FC = () => {
     world = new CANNON.World(); // 创建世界
     world.gravity.set(0, -9.8, 0); // 设置重力
     const sphereShape = new CANNON.Sphere(1); // 创建物理小球形状
-    const sphereWorldMaterial = new CANNON.Material(); // 设置物体材质
+    const sphereWorldMaterial = new CANNON.Material("default"); // 设置物体材质
     // 创建世界中的物体
     sphereBody = new CANNON.Body({
       mass: 1, // 小球质量
@@ -64,6 +64,8 @@ const MaterialBindCannon: FC = () => {
     // 创建世界中的地面
     const floorShape = new CANNON.Plane();
     const floorBody = new CANNON.Body();
+    const floorMaterial = new CANNON.Material("floor");
+    floorBody.material = floorMaterial;
     floorBody.mass = 0;
     floorBody.addShape(floorShape);
     floorBody.position.set(0, -5, 0);
@@ -73,9 +75,21 @@ const MaterialBindCannon: FC = () => {
     );
     world.addBody(floorBody);
 
+    const defaultContactMaterial = new CANNON.ContactMaterial(
+      sphereWorldMaterial,
+      floorMaterial,
+      {
+        friction: 0.1, // 摩擦力
+        restitution: 0.7, // 弹力
+      }
+    );
+
+    world.addContactMaterial(defaultContactMaterial);
+
     const hitEvent = (e) => {
       const impactStrength = e.contact.getImpactVelocityAlongNormal();
       if (impactStrength > 2) {
+        hitSound.volume = 0.01 * impactStrength;
         hitSound.currentTime = 0;
         hitSound.play(); // 需要与页面交互后才会播放声音。
       }
