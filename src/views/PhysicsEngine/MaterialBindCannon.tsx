@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import * as CANNON from "cannon-es";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
@@ -13,6 +13,13 @@ const MaterialBindCannon: FC = () => {
   let sphereBody: CANNON.Body | null = null;
   let sphereMesh: THREE.Mesh | null = null;
   let controls: OrbitControls | null = null;
+  const [hitSound] = useState(
+    new Audio(
+      new URL("./../../assets/audio/metalHit.mp3", import.meta.url).href
+    )
+  );
+  hitSound.volume = 0.1;
+  hitSound.autoplay = true;
   const clock = new THREE.Clock();
   const addLight = () => {
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -60,8 +67,20 @@ const MaterialBindCannon: FC = () => {
     floorBody.mass = 0;
     floorBody.addShape(floorShape);
     floorBody.position.set(0, -5, 0);
-    floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
+    floorBody.quaternion.setFromAxisAngle(
+      new CANNON.Vec3(1, 0, 0),
+      -Math.PI / 2
+    );
     world.addBody(floorBody);
+
+    const hitEvent = (e) => {
+      const impactStrength = e.contact.getImpactVelocityAlongNormal();
+      if (impactStrength > 2) {
+        hitSound.currentTime = 0;
+        hitSound.play(); // 需要与页面交互后才会播放声音。
+      }
+    };
+    sphereBody.addEventListener("collide", hitEvent);
   };
   const init = () => {
     scene = new THREE.Scene();
