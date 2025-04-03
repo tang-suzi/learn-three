@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef } from "react";
 import * as THREE from "three";
-import gsap, { random } from "gsap";
+import gsap from "gsap";
 import { useNavigate } from "react-router-dom";
 
 import "./index.css";
@@ -42,6 +42,7 @@ const FullScreenScroll: FC = () => {
   const raycaster = new THREE.Raycaster();
   const cubeArr = [];
   const cubeGroup = new THREE.Group();
+  cubeGroup.name = "cubeGroup";
   const createCube = () => {
     const cubeGeometry = new THREE.BoxGeometry(2, 2, 2);
     const cubeMaterial = new THREE.MeshBasicMaterial({
@@ -70,29 +71,10 @@ const FullScreenScroll: FC = () => {
       });
     }
   };
-  const addListener = () => {
-    window.addEventListener("mousemove", (event) => {
-      mouse.x = event.clientX / window.innerWidth - 0.5;
-      mouse.y = event.clientY / window.innerHeight - 0.5;
-    });
-
-    window.addEventListener("click", (event) => {
-      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-      initRaycasting();
-    });
-    window.addEventListener("resize", resizeWindow);
-    let currentPage = 0;
-    window.addEventListener("scroll", () => {
-      const newPage = Math.round(window.scrollY / window.innerHeight);
-      if (newPage !== currentPage) {
-        currentPage = newPage;
-      }
-    });
-  };
 
   // 星系
   const galaxyGroup = new THREE.Group();
+  galaxyGroup.name = "galaxyGroup";
   const createGalaxy = () => {
     const params = {
       count: 3000,
@@ -159,6 +141,7 @@ const FullScreenScroll: FC = () => {
     scene.add(galaxyGroup);
   };
   const randomPointsGroup = new THREE.Group();
+  randomPointsGroup.name = "randomPointsGroup";
   const randomPoints = () => {
     const textureLoader = new THREE.TextureLoader();
     const texture = textureLoader.load(
@@ -195,6 +178,63 @@ const FullScreenScroll: FC = () => {
     randomPointsGroup.position.y = -65;
     scene.add(randomPointsGroup);
   };
+  const groupArr: THREE.Group = [cubeGroup, galaxyGroup, randomPointsGroup];
+  const addListener = () => {
+    window.addEventListener("mousemove", (event) => {
+      mouse.x = event.clientX / window.innerWidth - 0.5;
+      mouse.y = event.clientY / window.innerHeight - 0.5;
+    });
+
+    window.addEventListener("click", (event) => {
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+      initRaycasting();
+    });
+    window.addEventListener("resize", resizeWindow);
+    let currentPage = 0;
+    window.addEventListener("scroll", () => {
+      const newPage = Math.round(window.scrollY / window.innerHeight);
+      if (newPage !== currentPage) {
+        console.log(currentPage);
+        currentPage = newPage;
+        gsap.to(groupArr[currentPage].rotation, {
+          z: "+=" + Math.PI * 2,
+          x: "+=" + Math.PI * 2,
+          duration: 2,
+          onComplete: () => {
+            console.log("旋转完成");
+          },
+        });
+        gsap.fromTo(
+          `.page${currentPage} h3`,
+          { x: 0 },
+          { x: 0, rotate: "+=360", duration: 1 }
+        );
+      }
+    });
+  };
+  const addGsapAnimate = () => {
+    gsap.to(cubeGroup.rotation, {
+      x: `+=6.28`,
+      y: `+=6.28`,
+      duration: 20,
+      repeat: -1,
+      ease: "none",
+    });
+    gsap.to(galaxyGroup.rotation, {
+      z: `+=6.28`,
+      duration: 20,
+      repeat: -1,
+      ease: "none",
+    });
+    gsap.to(randomPointsGroup.rotation, {
+      x: `+=6.28`,
+      y: `+=6.28`,
+      duration: 20,
+      repeat: -1,
+      ease: "none",
+    });
+  };
   const init = () => {
     renderer.setSize(window.innerWidth, (window.innerWidth / 16) * 9);
     document.body.appendChild(renderer.domElement);
@@ -202,18 +242,20 @@ const FullScreenScroll: FC = () => {
     createGalaxy();
     randomPoints();
     addListener();
+    addGsapAnimate();
     const animate = () => {
-      const time = clock.getElapsedTime();
-      const deltaTime = clock.getDelta();
-      cubeGroup.rotation.x = time * 0.1;
-      cubeGroup.rotation.y = time * 0.1;
+      // 物体动画
+      //   const time = clock.getElapsedTime();
+      //   cubeGroup.rotation.x = time * 0.1;
+      //   cubeGroup.rotation.y = time * 0.1;
 
-      galaxyGroup.rotation.z = time * 0.1;
+      //   galaxyGroup.rotation.z = time * 0.1;
 
-      randomPointsGroup.rotation.x = time*0.1
-      randomPointsGroup.rotation.y = time*0.1
+      //   randomPointsGroup.rotation.x = time * 0.1;
+      //   randomPointsGroup.rotation.y = time * 0.1;
 
       // 根据屏幕滚动距离设置相机位置
+      const deltaTime = clock.getDelta();
       camera.position.y = -(window.scrollY / window.innerHeight) * 30;
 
       camera.position.x += (mouse.x * 10 - camera.position.x) * deltaTime * 5;
@@ -233,13 +275,13 @@ const FullScreenScroll: FC = () => {
   return (
     <>
       <button onClick={backhome}>backHome</button>
-      <div className="page page1">
+      <div className="page page0">
         <h3>光线投射3D场景交互</h3>
       </div>
-      <div className="page page2">
+      <div className="page page1">
         <h3>星系</h3>
       </div>
-      <div className="page page3">
+      <div className="page page2">
         <h3>随机点</h3>
       </div>
     </>
