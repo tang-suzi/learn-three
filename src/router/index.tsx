@@ -92,6 +92,9 @@ const RaycastingObjectInteraction = lazy(
     )
 );
 const FullScreenScroll = lazy(() => import("./../views/FullScreenScroll"));
+const MaterialBindCannon = lazy(
+  () => import("./../views/PhysicsEngine/MaterialBindCannon")
+);
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -488,7 +491,14 @@ const routes = [
       {
         label: "应用物理引擎",
         key: "PhysicsEngine",
-        children: [],
+        children: [
+          {
+            label: "物体绑定物理引擎",
+            key: "/MaterialBindCannon",
+            path: "/MaterialBindCannon",
+            element: withLoadingComponent(<MaterialBindCannon />),
+          },
+        ],
       },
     ],
   },
