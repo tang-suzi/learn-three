@@ -95,6 +95,9 @@ const FullScreenScroll = lazy(() => import("./../views/FullScreenScroll"));
 const MaterialBindCannon = lazy(
   () => import("./../views/PhysicsEngine/MaterialBindCannon")
 );
+const CubeCollision = lazy(
+  () => import("./../views/PhysicsEngine/CubeCollision")
+);
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -497,6 +500,12 @@ const routes = [
             key: "/MaterialBindCannon",
             path: "/MaterialBindCannon",
             element: withLoadingComponent(<MaterialBindCannon />),
+          },
+          {
+            label: "方块碰撞",
+            key: "/CubeCollision",
+            path: "/CubeCollision",
+            element: withLoadingComponent(<CubeCollision />),
           },
         ],
       },
