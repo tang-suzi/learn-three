@@ -68,13 +68,6 @@ const CreateShaderMaterial: FC = () => {
     const rawShaderMaterial = new THREE.RawShaderMaterial({
       vertexShader: rawVertexShader,
       fragmentShader: rawFragmentShader,
-      side: THREE.DoubleSide,
-      uniforms: {
-        uTime: { value: 0 },
-        uTexture: {
-          value: texture,
-        },
-      },
     });
 
     // const floor = new THREE.Mesh(
