@@ -36,8 +36,20 @@ uniform mat4 projectionMatrix; // 投影矩阵
 // varying 变量的值在渲染过程中会被插值计算
 
 varying vec2 vUv; // 传递给片元着色器的变量
+varying float vElevation; // 传递给片元着色器的变量
 
 void main() {
     vUv = uv;
-    gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
+    vec4 modelPosition = modelMatrix * vec4(position, 1.0);
+    // modelPosition 偏移
+    // modelPosition.x+=1.0;
+    // modelPosition.z+=1.0;
+
+    // modelPosition.z += modelPosition.x;
+
+    modelPosition.z = sin(modelPosition.x * 10.0)*0.05;
+    modelPosition.z += sin(modelPosition.y * 10.0)*0.05;
+    vElevation = modelPosition.z;
+
+    gl_Position = projectionMatrix * viewMatrix * modelPosition;
 }
