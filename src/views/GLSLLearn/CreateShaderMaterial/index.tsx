@@ -2,6 +2,9 @@ import { FC, useEffect, useRef } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
+import basicVertexShader from "./vertex.glsl?raw";
+import basicFragmentShader from "./fragmentShader.glsl?raw";
+
 const CreateShaderMaterial: FC = () => {
   const threeDemo = useRef<HTMLDivElement | null>(null);
   const hasInit = useRef<boolean>(false);
@@ -35,20 +38,24 @@ const CreateShaderMaterial: FC = () => {
     // 创建材质
     // const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     // 创建着色器材质
+    // const shaderMaterial = new THREE.ShaderMaterial({
+    //   // 顶点着色器
+    //   // 投影矩阵 * 视图矩阵 * 模型矩阵 * 顶点坐标
+    //   vertexShader: `
+    //     void main() {
+    //       gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
+    //     }
+    //   `,
+    //   // 片元着色器
+    //   fragmentShader: `
+    //     void main() {
+    //       gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
+    //     }
+    //   `,
+    // });
     const shaderMaterial = new THREE.ShaderMaterial({
-      // 顶点着色器
-      // 投影矩阵 * 视图矩阵 * 模型矩阵 * 顶点坐标
-      vertexShader: `
-        void main() {
-          gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
-        }
-      `,
-      // 片元着色器
-      fragmentShader: `
-        void main() {
-          gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
-        }
-      `,
+      vertexShader: basicVertexShader,
+      fragmentShader: basicFragmentShader,
     });
 
     // const floor = new THREE.Mesh(
