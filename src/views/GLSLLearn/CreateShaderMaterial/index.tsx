@@ -2,8 +2,10 @@ import { FC, useEffect, useRef } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-import basicVertexShader from "./vertex.glsl?raw";
-import basicFragmentShader from "./fragmentShader.glsl?raw";
+// import basicVertexShader from "./vertex.glsl?raw";
+// import basicFragmentShader from "./fragmentShader.glsl?raw";
+import rawVertexShader from "./rawVertex.glsl?raw";
+import rawFragmentShader from "./rawFragment.glsl?raw";
 
 const CreateShaderMaterial: FC = () => {
   const threeDemo = useRef<HTMLDivElement | null>(null);
@@ -53,9 +55,26 @@ const CreateShaderMaterial: FC = () => {
     //     }
     //   `,
     // });
-    const shaderMaterial = new THREE.ShaderMaterial({
-      vertexShader: basicVertexShader,
-      fragmentShader: basicFragmentShader,
+    // const shaderMaterial = new THREE.ShaderMaterial({
+    //   vertexShader: basicVertexShader,
+    //   fragmentShader: basicFragmentShader,
+    // });
+
+    const textureLoader = new THREE.TextureLoader();
+    const texture = textureLoader.load(
+      new URL("./../../../assets/texture/ca.jpeg", import.meta.url).href
+    );
+
+    const rawShaderMaterial = new THREE.RawShaderMaterial({
+      vertexShader: rawVertexShader,
+      fragmentShader: rawFragmentShader,
+      side: THREE.DoubleSide,
+      uniforms: {
+        uTime: { value: 0 },
+        uTexture: {
+          value: texture,
+        },
+      },
     });
 
     // const floor = new THREE.Mesh(
@@ -64,7 +83,7 @@ const CreateShaderMaterial: FC = () => {
     // );
     const floor = new THREE.Mesh(
       new THREE.PlaneGeometry(1, 1, 64, 64),
-      shaderMaterial
+      rawShaderMaterial
     );
 
     scene.add(floor);
