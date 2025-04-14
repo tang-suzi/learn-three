@@ -91,6 +91,7 @@ const RaycastingObjectInteraction = lazy(
       "./../views/RaycastingAndObjectInteraction/RaycastingObjectInteraction"
     )
 );
+const CreateShaderMaterial = lazy(() => import("../views/GLSLLearn/CreateShaderMaterial"));
 const FullScreenScroll = lazy(() => import("./../views/FullScreenScroll"));
 const MaterialBindCannon = lazy(
   () => import("./../views/PhysicsEngine/MaterialBindCannon")
@@ -509,6 +510,18 @@ const routes = [
           },
         ],
       },
+      {
+        label: "GLSL学习",
+        key: "GLSL",
+        children: [
+          {
+            label: "着色器材质",
+            key: "/CreateShaderMaterial",
+            path: "/CreateShaderMaterial",
+            element: withLoadingComponent(<CreateShaderMaterial />),
+          },
+        ],
+      }
     ],
   },
   {
