@@ -38,6 +38,8 @@ uniform mat4 projectionMatrix; // 投影矩阵
 varying vec2 vUv; // 传递给片元着色器的变量
 varying float vElevation; // 传递给片元着色器的变量
 
+uniform float uTime; // 时间变量
+
 void main() {
     vUv = uv;
     vec4 modelPosition = modelMatrix * vec4(position, 1.0);
@@ -47,8 +49,8 @@ void main() {
 
     // modelPosition.z += modelPosition.x;
 
-    modelPosition.z = sin(modelPosition.x * 10.0)*0.05;
-    modelPosition.z += sin(modelPosition.y * 10.0)*0.05;
+    modelPosition.z = sin((modelPosition.x+uTime * 0.5) * 10.0)*0.05;
+    modelPosition.z += sin((modelPosition.y+uTime * 0.5) * 10.0)*0.05;
     vElevation = modelPosition.z;
 
     gl_Position = projectionMatrix * viewMatrix * modelPosition;

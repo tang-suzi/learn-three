@@ -15,6 +15,8 @@ const CreateShaderMaterial: FC = () => {
   let renderer: THREE.WebGLRenderer | null = null;
   let controls: OrbitControls | null = null;
   let axesHelper: THREE.AxesHelper | null = null;
+  let rawShaderMaterial: THREE.RawShaderMaterial | null = null;
+  const clock = new THREE.Clock();
   const init = () => {
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(
@@ -65,10 +67,14 @@ const CreateShaderMaterial: FC = () => {
       new URL("./../../../assets/texture/ca.jpeg", import.meta.url).href
     );
 
-    const rawShaderMaterial = new THREE.RawShaderMaterial({
+    rawShaderMaterial = new THREE.RawShaderMaterial({
       vertexShader: rawVertexShader,
       fragmentShader: rawFragmentShader,
       side: THREE.DoubleSide,
+      uniforms: {
+        uTime: { value: 0 },
+        uTexture: { value: texture },
+      },
     });
 
     // const floor = new THREE.Mesh(
@@ -83,6 +89,10 @@ const CreateShaderMaterial: FC = () => {
     scene.add(floor);
   };
   const animate = () => {
+    const elapsedTime = clock.getElapsedTime();
+    if (rawShaderMaterial) {
+      rawShaderMaterial.uniforms.uTime.value = elapsedTime;
+    }
     requestAnimationFrame(animate);
     controls.update();
     renderer.render(scene, camera);
