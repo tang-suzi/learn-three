@@ -92,6 +92,7 @@ const RaycastingObjectInteraction = lazy(
     )
 );
 const CreateShaderMaterial = lazy(() => import("../views/GLSLLearn/CreateShaderMaterial"));
+const ShaderObjects = lazy(() => import("../views/GLSLLearn/ShaderObjects"));
 const FullScreenScroll = lazy(() => import("./../views/FullScreenScroll"));
 const MaterialBindCannon = lazy(
   () => import("./../views/PhysicsEngine/MaterialBindCannon")
@@ -519,6 +520,12 @@ const routes = [
             key: "/CreateShaderMaterial",
             path: "/CreateShaderMaterial",
             element: withLoadingComponent(<CreateShaderMaterial />),
+          },
+          {
+            label: "glsl内置函数",
+            key: "/ShaderObjects",
+            path: "/ShaderObjects",
+            element: withLoadingComponent(<ShaderObjects />),
           },
         ],
       }
