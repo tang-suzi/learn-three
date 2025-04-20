@@ -93,13 +93,14 @@ const RaycastingObjectInteraction = lazy(
 );
 const CreateShaderMaterial = lazy(() => import("../views/GLSLLearn/CreateShaderMaterial"));
 const ShaderObjects = lazy(() => import("../views/GLSLLearn/ShaderObjects"));
-const FullScreenScroll = lazy(() => import("./../views/FullScreenScroll"));
 const MaterialBindCannon = lazy(
   () => import("./../views/PhysicsEngine/MaterialBindCannon")
 );
 const CubeCollision = lazy(
   () => import("./../views/PhysicsEngine/CubeCollision")
 );
+const KongmingLantern = lazy(() => import("../views/GLSLLearn/KongmingLantern"));
+const FullScreenScroll = lazy(() => import("./../views/FullScreenScroll"));
 
 const withLoadingComponent = (children: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>
@@ -526,6 +527,12 @@ const routes = [
             key: "/ShaderObjects",
             path: "/ShaderObjects",
             element: withLoadingComponent(<ShaderObjects />),
+          },
+          {
+            label: "孔明灯",
+            key: "/KongmingLantern",
+            path: "/KongmingLantern",
+            element: withLoadingComponent(<KongmingLantern />),
           },
         ],
       }
