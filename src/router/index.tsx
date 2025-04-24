@@ -100,6 +100,7 @@ const CubeCollision = lazy(
   () => import("./../views/PhysicsEngine/CubeCollision")
 );
 const KongmingLantern = lazy(() => import("../views/GLSLLearn/KongmingLantern"));
+const SmokeOrWater = lazy(() => import("../views/GLSLLearn/SmokeOrWater"));
 const FullScreenScroll = lazy(() => import("./../views/FullScreenScroll"));
 
 const withLoadingComponent = (children: JSX.Element) => (
@@ -493,7 +494,6 @@ const routes = [
           },
         ],
       },
-
       {
         label: "应用物理引擎",
         key: "PhysicsEngine",
@@ -534,6 +534,13 @@ const routes = [
             path: "/KongmingLantern",
             element: withLoadingComponent(<KongmingLantern />),
           },
+          {
+            label: "烟雾与水",
+            key: "/SmokeOrWater",
+            path: "/SmokeOrWater",
+            element: withLoadingComponent(<SmokeOrWater />),
+          },
+
         ],
       }
     ],
