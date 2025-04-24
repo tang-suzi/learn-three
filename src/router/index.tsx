@@ -101,6 +101,7 @@ const CubeCollision = lazy(
 );
 const KongmingLantern = lazy(() => import("../views/GLSLLearn/KongmingLantern"));
 const SmokeOrWater = lazy(() => import("../views/GLSLLearn/SmokeOrWater"));
+const ThreeJSWater = lazy(() => import("../views/GLSLLearn/ThreeJSWater"));
 const FullScreenScroll = lazy(() => import("./../views/FullScreenScroll"));
 
 const withLoadingComponent = (children: JSX.Element) => (
@@ -539,6 +540,12 @@ const routes = [
             key: "/SmokeOrWater",
             path: "/SmokeOrWater",
             element: withLoadingComponent(<SmokeOrWater />),
+          },
+          {
+            label: "Three.jsWater",
+            key: "/ThreeJSWater",
+            path: "/ThreeJSWater",
+            element: withLoadingComponent(<ThreeJSWater />),
           },
 
         ],
