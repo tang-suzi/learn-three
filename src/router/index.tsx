@@ -109,6 +109,9 @@ const ThreeJSWater = lazy(() => import("../views/GLSLLearn/ThreeJSWater"));
 const UseShaderCreateParticles = lazy(
   () => import("../views/GLSLLearn/UseShaderCreateParticles")
 );
+const GalaxyShader = lazy(
+  () => import("../views/GLSLLearn/GalaxyShader")
+);
 const FullScreenScroll = lazy(() => import("./../views/FullScreenScroll"));
 
 const withLoadingComponent = (children: JSX.Element) => (
@@ -559,6 +562,12 @@ const routes = [
             key: "/UseShaderCreateParticles",
             path: "/UseShaderCreateParticles",
             element: withLoadingComponent(<UseShaderCreateParticles />),
+          },
+          {
+            label: "使用着色器绘制galaxy",
+            key: "/GalaxyShader",
+            path: "/GalaxyShader",
+            element: withLoadingComponent(<GalaxyShader />),
           },
         ],
       },
