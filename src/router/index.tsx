@@ -91,7 +91,9 @@ const RaycastingObjectInteraction = lazy(
       "./../views/RaycastingAndObjectInteraction/RaycastingObjectInteraction"
     )
 );
-const CreateShaderMaterial = lazy(() => import("../views/GLSLLearn/CreateShaderMaterial"));
+const CreateShaderMaterial = lazy(
+  () => import("../views/GLSLLearn/CreateShaderMaterial")
+);
 const ShaderObjects = lazy(() => import("../views/GLSLLearn/ShaderObjects"));
 const MaterialBindCannon = lazy(
   () => import("./../views/PhysicsEngine/MaterialBindCannon")
@@ -99,9 +101,14 @@ const MaterialBindCannon = lazy(
 const CubeCollision = lazy(
   () => import("./../views/PhysicsEngine/CubeCollision")
 );
-const KongmingLantern = lazy(() => import("../views/GLSLLearn/KongmingLantern"));
+const KongmingLantern = lazy(
+  () => import("../views/GLSLLearn/KongmingLantern")
+);
 const SmokeOrWater = lazy(() => import("../views/GLSLLearn/SmokeOrWater"));
 const ThreeJSWater = lazy(() => import("../views/GLSLLearn/ThreeJSWater"));
+const UseShaderCreateParticles = lazy(
+  () => import("../views/GLSLLearn/UseShaderCreateParticles")
+);
 const FullScreenScroll = lazy(() => import("./../views/FullScreenScroll"));
 
 const withLoadingComponent = (children: JSX.Element) => (
@@ -547,9 +554,14 @@ const routes = [
             path: "/ThreeJSWater",
             element: withLoadingComponent(<ThreeJSWater />),
           },
-
+          {
+            label: "使用着色器绘制粒子",
+            key: "/UseShaderCreateParticles",
+            path: "/UseShaderCreateParticles",
+            element: withLoadingComponent(<UseShaderCreateParticles />),
+          },
         ],
-      }
+      },
     ],
   },
   {
