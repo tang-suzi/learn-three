@@ -115,6 +115,9 @@ const GalaxyShader = lazy(
 const FireworksShader = lazy(
   () => import("../views/GLSLLearn/FireworksShader")
 );
+const HitCharacters = lazy(
+  () => import("../views/GLSLLearn/HitCharacters")
+)
 const FullScreenScroll = lazy(() => import("./../views/FullScreenScroll"));
 
 const withLoadingComponent = (children: JSX.Element) => (
@@ -577,6 +580,12 @@ const routes = [
             key: "/FireworksShader",
             path: "/FireworksShader",
             element: withLoadingComponent(<FireworksShader />),
+          },
+          {
+            label: "打击人物",
+            key: "/HitCharacters",
+            path: "/HitCharacters",
+            element: withLoadingComponent(<HitCharacters />),
           },
         ],
       },
