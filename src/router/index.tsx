@@ -112,6 +112,9 @@ const UseShaderCreateParticles = lazy(
 const GalaxyShader = lazy(
   () => import("../views/GLSLLearn/GalaxyShader")
 );
+const FireworksShader = lazy(
+  () => import("../views/GLSLLearn/FireworksShader")
+);
 const FullScreenScroll = lazy(() => import("./../views/FullScreenScroll"));
 
 const withLoadingComponent = (children: JSX.Element) => (
@@ -568,6 +571,12 @@ const routes = [
             key: "/GalaxyShader",
             path: "/GalaxyShader",
             element: withLoadingComponent(<GalaxyShader />),
+          },
+          {
+            label: "烟花shader",
+            key: "/FireworksShader",
+            path: "/FireworksShader",
+            element: withLoadingComponent(<FireworksShader />),
           },
         ],
       },
