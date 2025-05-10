@@ -109,15 +109,12 @@ const ThreeJSWater = lazy(() => import("../views/GLSLLearn/ThreeJSWater"));
 const UseShaderCreateParticles = lazy(
   () => import("../views/GLSLLearn/UseShaderCreateParticles")
 );
-const GalaxyShader = lazy(
-  () => import("../views/GLSLLearn/GalaxyShader")
-);
+const GalaxyShader = lazy(() => import("../views/GLSLLearn/GalaxyShader"));
 const FireworksShader = lazy(
   () => import("../views/GLSLLearn/FireworksShader")
 );
-const HitCharacters = lazy(
-  () => import("../views/GLSLLearn/HitCharacters")
-)
+const HitCharacters = lazy(() => import("../views/GLSLLearn/HitCharacters"));
+const UseEffectComposer = lazy(() => import("../views/UseEffectComposer"));
 const FullScreenScroll = lazy(() => import("./../views/FullScreenScroll"));
 
 const withLoadingComponent = (children: JSX.Element) => (
@@ -586,6 +583,18 @@ const routes = [
             key: "/HitCharacters",
             path: "/HitCharacters",
             element: withLoadingComponent(<HitCharacters />),
+          },
+        ],
+      },
+      {
+        label: "效果合成器",
+        key: "EffectComposer",
+        children: [
+          {
+            label: "使用EffectComposer",
+            key: "/UseEffectComposer",
+            path: "/UseEffectComposer",
+            element: withLoadingComponent(<UseEffectComposer />),
           },
         ],
       },
