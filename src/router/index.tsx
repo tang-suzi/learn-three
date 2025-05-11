@@ -115,6 +115,7 @@ const FireworksShader = lazy(
 );
 const HitCharacters = lazy(() => import("../views/GLSLLearn/HitCharacters"));
 const UseEffectComposer = lazy(() => import("../views/UseEffectComposer"));
+const CSS2DRender = lazy(() => import("../views/CSS2DRender"));
 const FullScreenScroll = lazy(() => import("./../views/FullScreenScroll"));
 
 const withLoadingComponent = (children: JSX.Element) => (
@@ -595,6 +596,18 @@ const routes = [
             key: "/UseEffectComposer",
             path: "/UseEffectComposer",
             element: withLoadingComponent(<UseEffectComposer />),
+          },
+        ],
+      },
+      {
+        label: "CSS渲染器",
+        key: "CSSRenderer",
+        children: [
+          {
+            label: "CSS2DRender",
+            key: "/CSS2DRender",
+            path: "/CSS2DRender",
+            element: withLoadingComponent(<CSS2DRender />),
           },
         ],
       },
