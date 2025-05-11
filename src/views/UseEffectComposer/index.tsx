@@ -151,6 +151,58 @@ const UseEffectComposer: FC = () => {
       .onChange(function (value) {
         unrealBloomPass.radius = Number(value);
       });
+
+    const colorParams = {
+      r: 0,
+      g: 0,
+      b: 0,
+    };
+    const shaderPass = new ShaderPass({
+      uniforms: {
+        tDiffuse: { value: null },
+        uColor: {
+          value: new THREE.Color(colorParams.r, colorParams.g, colorParams.b),
+        },
+      },
+      vertexShader: `
+            varying vec2 vUv;
+            void main(){
+                vUv = uv;
+                gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.0);
+            }
+        `,
+      fragmentShader: `
+            varying vec2 vUv;
+            uniform sampler2D tDiffuse;
+            uniform vec3 uColor;
+            void main(){
+                vec4 color = texture2D(tDiffuse,vUv);
+                // gl_FragColor = vec4(vUv,0.0,1.0);
+                color.xyz+= uColor;
+                gl_FragColor = color;
+            }
+        `,
+    });
+    const shaderFolder = gui?.addFolder("ShaderPass");
+    shaderFolder
+      ?.add(colorParams, "r", -1.0, 1.0)
+      .step(0.01)
+      .onChange(function (value) {
+        shaderPass.uniforms.uColor.value.r = value;
+      });
+    shaderFolder
+      ?.add(colorParams, "g", -1.0, 1.0)
+      .step(0.01)
+      .onChange(function (value) {
+        shaderPass.uniforms.uColor.value.g = value;
+      });
+    shaderFolder
+      ?.add(colorParams, "b", -1.0, 1.0)
+      .step(0.01)
+      .onChange(function (value) {
+        shaderPass.uniforms.uColor.value.b = value;
+      });
+    effectComposer.addPass(shaderPass);
   };
   const animate = () => {
     requestAnimationFrame(animate);
