@@ -56,8 +56,9 @@ const CSSRender: FC = () => {
     controls.maxDistance = 100;
   };
   const addLight = () => {
-    const dirLight = new THREE.DirectionalLight(0xffffff);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 3);
     dirLight.position.set(0, 0, 1);
+    dirLight.layers.enableAll();
     scene.add(dirLight);
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     scene.add(ambientLight);
@@ -90,7 +91,7 @@ const CSSRender: FC = () => {
   const addObjects = () => {
     const earthGeometry = new THREE.SphereGeometry(1, 16, 16);
     const earthMaterial = new THREE.MeshPhongMaterial({
-      color: 0x333333,
+      specular: 0x333333,
       shininess: 5,
       map: textureLoader.load(
         new URL(
@@ -110,7 +111,7 @@ const CSSRender: FC = () => {
           import.meta.url
         ).href
       ),
-      normalScale: new THREE.Vector2(1, 1),
+      normalScale: new THREE.Vector2(0.85, 0.85),
     });
     const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
     scene.add(earthMesh);
