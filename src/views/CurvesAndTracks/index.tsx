@@ -43,7 +43,8 @@ const CurvesAndTracks: FC = () => {
       //   moonMesh.position.copy(points[pointIndex]); // 更新小球位置
       const time = (elapsed * 0.1) % 1; // 计算当前时间
       const point = curve.getPointAt(time);
-      moonMesh.position.copy(point); // 更新小球位置
+      //   moonMesh.position.copy(point); // 更新小球位置
+      camera.position.copy(point); // 让相机根据轨迹移动
     }
     requestAnimationFrame(animate);
     controls.update();
