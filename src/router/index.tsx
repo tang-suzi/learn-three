@@ -116,6 +116,7 @@ const FireworksShader = lazy(
 const HitCharacters = lazy(() => import("../views/GLSLLearn/HitCharacters"));
 const UseEffectComposer = lazy(() => import("../views/UseEffectComposer"));
 const CSS2DRender = lazy(() => import("../views/CSS2DRender"));
+const CurvesAndTracks = lazy(() => import("../views/CurvesAndTracks"));
 const FullScreenScroll = lazy(() => import("./../views/FullScreenScroll"));
 
 const withLoadingComponent = (children: JSX.Element) => (
@@ -610,6 +611,12 @@ const routes = [
             element: withLoadingComponent(<CSS2DRender />),
           },
         ],
+      },
+      {
+        label: "曲线与轨迹",
+        key: "CurvesAndTracks",
+        path: "/CurvesAndTracks",
+        element: withLoadingComponent(<CurvesAndTracks />),
       },
     ],
   },
