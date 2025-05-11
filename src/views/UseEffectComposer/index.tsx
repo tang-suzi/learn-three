@@ -24,6 +24,10 @@ const UseEffectComposer: FC = () => {
   let renderPass: RenderPass | null = null;
   let gui: GUI | null = null;
   let cubeTextureLoader: THREE.CubeTextureLoader | null = null;
+  const clock = new THREE.Clock();
+  let delta = 0;
+  let elapsedTime = 0;
+  let shaderPass: ShaderPass | null = null;
   const init = () => {
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(
@@ -87,6 +91,10 @@ const UseEffectComposer: FC = () => {
     );
   };
   const addEffectComposer = () => {
+    const normalTexture = new THREE.TextureLoader().load(
+      new URL("./../../assets/texture/interfaceNormalMap.png", import.meta.url)
+        .href
+    );
     effectComposer = new EffectComposer(renderer);
     effectComposer.setSize(
       canvasRef.current?.parentNode.clientWidth,
@@ -157,11 +165,17 @@ const UseEffectComposer: FC = () => {
       g: 0,
       b: 0,
     };
-    const shaderPass = new ShaderPass({
+    shaderPass = new ShaderPass({
       uniforms: {
         tDiffuse: { value: null },
         uColor: {
           value: new THREE.Color(colorParams.r, colorParams.g, colorParams.b),
+        },
+        uNormalMap: {
+          value: normalTexture,
+        },
+        uTime: {
+          value: 0,
         },
       },
       vertexShader: `
@@ -173,12 +187,19 @@ const UseEffectComposer: FC = () => {
         `,
       fragmentShader: `
             varying vec2 vUv;
-            uniform sampler2D tDiffuse;
             uniform vec3 uColor;
+            uniform sampler2D tDiffuse;
+            uniform sampler2D uNormalMap;
+            uniform float uTime;
             void main(){
+                vec2 newUv = vUv;
+                newUv += sin(newUv.x * 10.0 + uTime*0.5) * 0.03;
                 vec4 color = texture2D(tDiffuse,vUv);
+                vec4 normalColor = texture2D(uNormalMap,vUv);
+                vec3 lightDirection = normalize(vec3(-5,5,1));
+                float lightness = clamp(dot(normalColor.xyz, lightDirection), 0.0, 1.0);
                 // gl_FragColor = vec4(vUv,0.0,1.0);
-                color.xyz+= uColor;
+                color.xyz+= lightness;
                 gl_FragColor = color;
             }
         `,
@@ -207,6 +228,8 @@ const UseEffectComposer: FC = () => {
   const animate = () => {
     requestAnimationFrame(animate);
     // renderer.render(scene, camera);
+    elapsedTime = clock.getElapsedTime();
+    shaderPass.material.uniforms.uTime.value = elapsedTime;
     effectComposer?.render();
     controls?.update();
   };
