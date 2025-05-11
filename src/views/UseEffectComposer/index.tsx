@@ -194,7 +194,7 @@ const UseEffectComposer: FC = () => {
             void main(){
                 vec2 newUv = vUv;
                 newUv += sin(newUv.x * 10.0 + uTime*0.5) * 0.03;
-                vec4 color = texture2D(tDiffuse,vUv);
+                vec4 color = texture2D(tDiffuse,newUv);
                 vec4 normalColor = texture2D(uNormalMap,vUv);
                 vec3 lightDirection = normalize(vec3(-5,5,1));
                 float lightness = clamp(dot(normalColor.xyz, lightDirection), 0.0, 1.0);
