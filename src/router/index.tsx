@@ -117,6 +117,9 @@ const HitCharacters = lazy(() => import("../views/GLSLLearn/HitCharacters"));
 const UseEffectComposer = lazy(() => import("../views/UseEffectComposer"));
 const CSS2DRender = lazy(() => import("../views/CSS2DRender"));
 const CurvesAndTracks = lazy(() => import("../views/CurvesAndTracks"));
+const DeformationAnimation = lazy(
+  () => import("../views/DeformationAnimation")
+);
 const FullScreenScroll = lazy(() => import("./../views/FullScreenScroll"));
 
 const withLoadingComponent = (children: JSX.Element) => (
@@ -617,6 +620,12 @@ const routes = [
         key: "CurvesAndTracks",
         path: "/CurvesAndTracks",
         element: withLoadingComponent(<CurvesAndTracks />),
+      },
+      {
+        label: "形变动画",
+        key: "DeformationAnimation",
+        path: "/DeformationAnimation",
+        element: withLoadingComponent(<DeformationAnimation />),
       },
     ],
   },
